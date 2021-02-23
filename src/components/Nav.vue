@@ -13,7 +13,7 @@ export default {
     .nav {
         width: 12vw;
         height: 100vh;
-        background: white;
+        border: 1px solid black;
         float: left;
     }
 </style>

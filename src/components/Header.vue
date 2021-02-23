@@ -2,6 +2,7 @@
   <header class="header">
     <input type="search" name="search" id="search">
     <Clock />
+    <h1>SG Sakowicz Tarakan</h1>
   </header>
 </template>
 
@@ -22,17 +23,21 @@ export default {
 
 <style scoped>
   header {
-    background: grey;
     width: 88vw;
     height: 8vh;
     float: left;
 
     display: flex;
     align-items: center;
+    border: 1px solid black;
+    position: relative;
+
+    justify-content: space-around;
+    padding: 0;
   }
   input {
     height: 30px;
     width: 30%;
-    margin-left: 50px;
   }
+  
 </style>

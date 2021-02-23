@@ -15,7 +15,7 @@ export default {
     .main {
         width: 70vw;
         height: 92vh;
-        background: green;
+        border: 1px solid black;
         float: left;
     }
 </style>

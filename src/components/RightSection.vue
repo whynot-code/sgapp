@@ -14,7 +14,7 @@ export default {
     .rightSection {
         width: 18vw;
         height: 92vh;
-        background: brown;
+        border: 1px solid black;
         float: left;
     }
 </style>
