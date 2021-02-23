@@ -1,20 +1,22 @@
 <template>
   <header class="header">
     <input type="search" name="search" id="search">
-    <div class="clock">{{ clock.date }}</div>
+    <Clock />
   </header>
 </template>
 
 <script>
+import Clock from "@/components/Clock.vue"
 export default {
   name: 'Header',
+  components: {
+    Clock,
+  },
   data() {
     return{
-      clock: {
-        date: new Date(),
+    
       }
     }
-  },
 }
 </script>
 
