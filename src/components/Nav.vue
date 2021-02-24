@@ -1,5 +1,16 @@
 <template>
-  <aside class="nav"></aside>
+  <aside class="nav">
+      <nav>
+          <ul>
+              <router-link to="/"><li>Projekty</li></router-link>
+              <router-link to="/Planowanie"><li>Planowanie</li></router-link>
+              <li>Kontakty</li>
+              <li>Mapa</li>
+              <li>Notatki</li>
+              <li>Ustawienia</li>
+          </ul>
+      </nav>
+  </aside>
 </template>
 
 <script>
@@ -15,5 +26,14 @@ export default {
         height: 100vh;
         border: 1px solid black;
         float: left;
+    }
+    ul {
+        width: 80%;
+        font-size: 23px;
+        margin-top: 8vh;
+    }
+    li {
+        line-height: 26px;
+        padding: 5px 30px;
     }
 </style>

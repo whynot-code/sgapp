@@ -1,8 +1,8 @@
 <template>
     <div class="clock">
         <div>
-            <h2>{{ fixDisplay(this.currTime.hours) }}:{{ fixDisplay(this.currTime.minutes) }}</h2>
-            <h3>{{ currTime.year }}-{{ fixDisplay(this.currTime.month) }}-{{fixDisplay(this.currTime.monthDay)}}</h3>
+            <h2>{{ fixDisplay(this.currTime.hours) }}:{{ fixDisplay(this.currTime.minutes) }}:{{ fixDisplay(this.currTime.seconds)}}</h2>
+            <h3>{{ fixDisplay(this.currTime.monthDay) }}-{{ fixDisplay(this.currTime.month) }}-{{ currTime.year }}</h3>
         </div>
         <h1>{{ dayName }}</h1>
     </div>
@@ -73,7 +73,7 @@ export default {
 
 <style scoped>
     .clock {
-        height: 5vh;
+        height: 7vh;
         display: flex;
     }
     h1{
