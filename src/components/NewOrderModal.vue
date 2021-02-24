@@ -5,36 +5,36 @@
             <h1>Nowe Zlecenie:</h1>
             <form action="" name="orderForm">
                 <label for="name">Nazwa zlecenia:</label><br />
-                <textarea type="text" v-model="name" name="name" id="name"></textarea> <br />
+                <textarea type="text" v-model="newOrderData.name" name="name" id="name"></textarea> <br />
 
                 <label for="projekt">Projekt: </label>
-                <input type="checkbox" v-model="projekt" value="true" name="projekt" id="projekt">
+                <input type="checkbox" v-model="newOrderData.projekt" name="projekt" id="projekt">
 
                 <label for="ppb">PPB:</label>
-                <input type="checkbox" v-model="ppb" value="true" name="ppb" id="ppb">
+                <input type="checkbox" v-model="newOrderData.ppb" name="ppb" id="ppb">
 
                 <label for="numerajca">Numeracja:</label>
-                <input type="checkbox" v-model="numeracja" value="true"  name="numeracja" id="numeracja">
+                <input type="checkbox" v-model="newOrderData.numeracja" value="true"  name="numeracja" id="numeracja">
 
                 <label for="wypis">Wypis/Wyrys:</label>
-                <input type="checkbox" v-model="wypis" value="true" name="wypis" id="wypis">
+                <input type="checkbox" v-model="newOrderData.wypis" value="true" name="wypis" id="wypis">
 
                 <label for="zejecie">Zajęcie Pasa:</label>
-                <input type="checkbox" v-model="zajecie" value="true" name="zajecie" id="zajecie">
+                <input type="checkbox" v-model="newOrderData.zajecie" value="true" name="zajecie" id="zajecie">
 
                 <label for="etapowka">Etapówka:</label>
-                <input type="checkbox" v-model="etapówka" value="true" name="etapowka" id="etapowka">
+                <input type="checkbox" v-model="newOrderData.etapowka" value="true" name="etapowka" id="etapowka">
 
                 <label for="powyk">Dok. Powykonawcza:</label>
-                <input type="checkbox" v-model="powyk" value="true" name="powyk" id="powyk">
+                <input type="checkbox" v-model="newOrderData.powyk" value="true" name="powyk" id="powyk">
 
                 <label for="faktura">Faktura:</label>
-                <input type="checkbox" v-model="faktura" value="true" name="faktura" id="faktura" checked disabled> <br />
+                <input type="checkbox" v-model="newOrderData.faktura" value="true" name="faktura" id="faktura" checked disabled> <br />
 
                 <label for="dodatkowe" class="extra">Dodatkowe informacje:</label><br />
-                <textarea placeholder="np. wymagane zgłoszenia do konserwatora, wód polskich itp." v-model="extra" name="dodatkowe" id="dodatkowe" cols="50" rows="10"></textarea><br />
-            {{ newOrderData.name }}
-                <button class="addOrder">Dodaj</button>
+                <textarea placeholder="np. wymagane zgłoszenia do konserwatora, wód polskich itp." v-model="newOrderData.extra" name="dodatkowe" id="dodatkowe" cols="50" rows="10"></textarea><br />
+            {{ newOrderData }}
+                <button @click.stop.prevent="addOrder()" class="addOrder">Dodaj</button>
             </form>
             
         </div>
@@ -56,6 +56,7 @@ export default {
                 etapowka: "",
                 powyk: "",
                 faktura: true,
+                extra: ""
             }
         }
     },
@@ -64,9 +65,20 @@ export default {
     },
     methods: {
         closeModal() {
-            console.log('dziala')
             return this.modalOn = !this.modalOn
         },
+        addOrder() {
+            let nameInput = document.querySelector("#name");
+            if(!this.newOrderData.name) {   //VALIDATE EMPTY ORDER
+                nameInput.setAttribute("placeholder", "Bez nazwy nie polecimy! :(") ;
+                nameInput.style.border = '1px solid red';
+            } else{
+                nameInput.style.border = 'none';
+            }
+
+
+            
+        }
         
     }
 
@@ -125,7 +137,10 @@ export default {
         margin: 20px 0 0 0;
         padding-left: 0;
     }
-    textarea:first-of-type {
+    #name::placeholder {
+        color: red;
+    }
+    #name {
         width: 55%;
         padding: 15px 20px;
         font-size: 20px;
