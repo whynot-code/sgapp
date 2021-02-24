@@ -75,6 +75,7 @@ export default {
     .clock {
         height: 7vh;
         display: flex;
+        align-items: center;
     }
     h1{
         text-transform: uppercase;

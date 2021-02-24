@@ -1,13 +1,15 @@
 <template>
     <section>
-        <NewOrderModal :modalOn="modalOn" />
+        <NewOrderModal :modalOn="modalOn" @closeModal="openCloseModal" />
         <header>
-            <button @click="openModal()">Nowy Projekt</button>
+            <button @click="openCloseModal()">Nowy Projekt</button>
         </header>
         <table>
             <tr>
                 <td></td><td>Nazwa</td> <td>Projekt</td> <td>PPB</td> <td>Numeracja</td> <td>Wypis/Wyrys</td> <td>Zajęcie Pasa</td> <td>Etapówka</td> <td>Powykonawcza</td> <td>Faktura</td>
             </tr>
+            {{ getCurrOrders }}
+            <button @click="mutate()"></button>
         </table>
         
     </section>
@@ -15,6 +17,7 @@
 
 <script>
 import NewOrderModal from "@/components/NewOrderModal.vue"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
     name: "Projekty",
@@ -23,13 +26,13 @@ export default {
     },
     data() {
         return {
-            currOrders: [],
             modalOn: false,
         }
     },
     methods: {
-        openModal(){
-            return this.modalOn = !this.modalOn
+        ...mapActions(['mutate']),
+        openCloseModal(){
+            this.modalOn = !this.modalOn
         },
         createOrder() {
 
@@ -37,7 +40,10 @@ export default {
         addOrder() {
             
         }
-    }
+    },
+    computed: mapGetters(['getCurrOrders'])
+    
+    
 }
 </script>
 

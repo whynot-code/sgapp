@@ -1,7 +1,7 @@
 <template>
     <div :class="{hidden: !modalOn}" class='bg'>
         <div class="newOrder">
-            <button @click="closeModal()" class="closeModal">x</button>
+            <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
             <h1>Nowe Zlecenie:</h1>
             <form action="" name="orderForm">
                 <label for="name">Nazwa zlecenia:</label><br />
@@ -33,7 +33,7 @@
 
                 <label for="dodatkowe" class="extra">Dodatkowe informacje:</label><br />
                 <textarea placeholder="np. wymagane zgłoszenia do konserwatora, wód polskich itp." v-model="newOrderData.extra" name="dodatkowe" id="dodatkowe" cols="50" rows="10"></textarea><br />
-            {{ newOrderData }}
+        
                 <button @click.stop.prevent="addOrder()" class="addOrder">Dodaj</button>
             </form>
             
@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         closeModal() {
-            return this.modalOn = !this.modalOn
+            this.$emit("closeModal", this.modalOn)
         },
         addOrder() {
             let nameInput = document.querySelector("#name");
