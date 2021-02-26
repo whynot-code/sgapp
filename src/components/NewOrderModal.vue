@@ -1,43 +1,40 @@
-<template>
-    <div :class="{hidden: !modalOn}" class='bg'>
-        <div class="newOrder">
-            <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
-            <h1>Nowe Zlecenie:</h1>
-            <form action="" name="orderForm">
-                <label for="name">Nazwa zlecenia:</label><br />
-                <textarea type="text" v-model="newOrderData.name" name="name" id="name"></textarea> <br />
+<template> 
+    <div :class="{hidden: !modalOn}" class="newOrder">
+        <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
+        <h1>Nowe Zlecenie:</h1>
+        <form action="" name="orderForm">
+            <label for="name">Nazwa zlecenia:</label><br />
+            <textarea type="text" v-model="newOrderData.name" name="name" id="name"></textarea> <br />
 
-                <label for="projekt">Projekt: </label>
-                <input type="checkbox" v-model="newOrderData.projekt" name="projekt" id="projekt">
+            <label for="projekt">Projekt: </label>
+            <input type="checkbox" v-model="newOrderData.projekt" name="projekt" id="projekt">
 
-                <label for="ppb">PPB:</label>
-                <input type="checkbox" v-model="newOrderData.ppb" name="ppb" id="ppb">
+            <label for="ppb">PPB:</label>
+            <input type="checkbox" v-model="newOrderData.ppb" name="ppb" id="ppb">
 
-                <label for="numerajca">Numeracja:</label>
-                <input type="checkbox" v-model="newOrderData.numeracja" value="true"  name="numeracja" id="numeracja">
+            <label for="numerajca">Numeracja:</label>
+            <input type="checkbox" v-model="newOrderData.numeracja" value="true"  name="numeracja" id="numeracja">
 
-                <label for="wypis">Wypis/Wyrys:</label>
-                <input type="checkbox" v-model="newOrderData.wypis" value="true" name="wypis" id="wypis">
+            <label for="wypis">Wypis/Wyrys:</label>
+            <input type="checkbox" v-model="newOrderData.wypis" value="true" name="wypis" id="wypis">
 
-                <label for="zejecie">Zajęcie Pasa:</label>
-                <input type="checkbox" v-model="newOrderData.zajecie" value="true" name="zajecie" id="zajecie">
+            <label for="zejecie">Zajęcie Pasa:</label>
+            <input type="checkbox" v-model="newOrderData.zajecie" value="true" name="zajecie" id="zajecie">
 
-                <label for="etapowka">Etapówka:</label>
-                <input type="checkbox" v-model="newOrderData.etapowka" value="true" name="etapowka" id="etapowka">
+            <label for="etapowka">Etapówka:</label>
+            <input type="checkbox" v-model="newOrderData.etapowka" value="true" name="etapowka" id="etapowka">
 
-                <label for="powyk">Dok. Powykonawcza:</label>
-                <input type="checkbox" v-model="newOrderData.powyk" value="true" name="powyk" id="powyk">
+            <label for="powyk">Dok. Powykonawcza:</label>
+            <input type="checkbox" v-model="newOrderData.powyk" value="true" name="powyk" id="powyk">
 
-                <label for="faktura">Faktura:</label>
-                <input type="checkbox" v-model="newOrderData.faktura" value="true" name="faktura" id="faktura" checked disabled> <br />
+            <label for="faktura">Faktura:</label>
+            <input type="checkbox" v-model="newOrderData.faktura" value="true" name="faktura" id="faktura" checked disabled> <br />
 
-                <label for="dodatkowe" class="extra">Dodatkowe informacje:</label><br />
-                <textarea placeholder="np. wymagane zgłoszenia do konserwatora, wód polskich itp." v-model="newOrderData.extra" name="dodatkowe" id="dodatkowe" cols="50" rows="10"></textarea><br />
-        
-                <button @click.stop.prevent="addOrder()" class="addOrder">Dodaj</button>
-            </form>
-            
-        </div>
+            <label for="dodatkowe" class="extra">Dodatkowe informacje:</label><br />
+            <textarea placeholder="np. wymagane zgłoszenia do konserwatora, wód polskich itp." v-model="newOrderData.extra" name="dodatkowe" id="dodatkowe" cols="50" rows="10"></textarea><br />
+    
+            <button @click.stop.prevent="addOrder()" class="addOrder">Dodaj</button>
+        </form>
     </div>
 </template>
 
@@ -87,12 +84,11 @@ export default {
 
 <style scoped>
     .newOrder {
-        width: 60vw;
-        position: relative;
+        width: 100%;
+        height: 92vh;
+        position: absolute;
 
-        background: lemonchiffon;
-        top: 5px;
-        left: 5px;
+        background: rgba(255, 250, 205, 0.925);
         
         padding: 25px;
 
@@ -100,19 +96,7 @@ export default {
         flex-direction: column;
         align-items: center;
     }
-    .bg {
-        position: absolute;
-        left: 0;
-        top: 0;
-
-        width: 100vw;
-        height: 100vh;
-
-        background: rgba(0, 0, 0, 0.534);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  
     .closeModal {
         padding: 3px 7px;
         border: 1px solid black;

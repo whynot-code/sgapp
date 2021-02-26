@@ -32,6 +32,7 @@ export default {
 }
 body {
   background: grey;
+  overflow: hidden;
 }
 #app {
   width: 100vw;
