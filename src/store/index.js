@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-console.log(Vuex)
+
 export default new Vuex.Store({
   state: {
     currOrders: [
@@ -17,6 +17,7 @@ export default new Vuex.Store({
          etapowka: { needed: "-", set: "" },
          powyk: { needed: "+", set: "" },
          faktura: { needed: "+", set: "" },
+         extra: ""
       },
       {
          name: "Tczew Ogrodowa",
@@ -29,6 +30,7 @@ export default new Vuex.Store({
          etapowka: { needed: "+", set: "" },
          powyk: { needed: "+", set: "" },
          faktura: { needed: "+", set: "" },
+         extra: ""
       },
     ],
   },
@@ -36,11 +38,11 @@ export default new Vuex.Store({
     getCurrOrders: state => state.currOrders
   },
   mutations: {
-    setCurrOrders: (state, newValue) => {state.currOrders.unshift('lubieplacki'); console.log(newValue)}
+    setCurrOrders: (state, newValue) => {state.currOrders.push(newValue);}
   },
   actions: {
-    mutate({ commit }) {
-      commit('setCurrOrders', "lubie placki")
+    mutate({ commit }, newValue) {
+      commit('setCurrOrders', newValue)
     }
   },
   modules: {

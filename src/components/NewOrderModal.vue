@@ -1,10 +1,14 @@
 <template> 
-    <div :class="{hidden: !modalOn}" class="newOrder">
+    <div :class="{hidden: !newOrderModalOn}" class="newOrder">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
         <h1>Nowe Zlecenie:</h1>
         <form action="" name="orderForm">
             <label for="name">Nazwa zlecenia:</label><br />
             <textarea type="text" v-model="newOrderData.name" name="name" id="name"></textarea> <br />
+
+            <label for="name">Termin wykonania:</label>
+            <input type="date" v-model="newOrderData.termin" name="date" id="date"> <br />
+            {{ newOrderData.date}}
 
             <label for="projekt">Projekt: </label>
             <input type="checkbox" v-model="newOrderData.projekt" name="projekt" id="projekt">
@@ -39,12 +43,15 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
     name: "NewOrderModal",
     data() {
         return {
             newOrderData: {
                 name: "",
+                termin: "",
                 projekt: "",
                 ppb: "",
                 numeracja: "",
@@ -58,27 +65,47 @@ export default {
         }
     },
     props: {
-        modalOn: Boolean,
+        newOrderModalOn: Boolean,
     },
     methods: {
+        ...mapActions(['mutate']),
         closeModal() {
-            this.$emit("closeModal", this.modalOn)
+            this.$emit("closeModal", this.newOrderModalOn)
+            this.clearForm()
+        },
+        clearForm() {
+            for(let key in this.newOrderData) {
+                this.newOrderData[key] = "";
+            }
         },
         addOrder() {
             let nameInput = document.querySelector("#name");
+
             if(!this.newOrderData.name) {   //VALIDATE EMPTY ORDER
                 nameInput.setAttribute("placeholder", "Bez nazwy nie polecimy! :(") ;
                 nameInput.style.border = '1px solid red';
             } else{
                 nameInput.style.border = 'none';
-            }
 
-
-            
-        }
-        
+                let newOrder = {
+                    name: this.newOrderData.name,
+                    termin: this.newOrderData.termin.split('-').reverse().join('.'),
+                    projekt: { needed: this.newOrderData.projekt ? "+" : "-", set: ""},
+                    ppb: { needed: this.newOrderData.ppb ? "+" : "-", set: ""},
+                    numeracja: { needed: this.newOrderData.numeracja ? "+" : "-", set: ""},
+                    wypis: { needed: this.newOrderData.wypis ? "+" : "-", set: ""},
+                    zajecie: { needed: this.newOrderData.zajecie ? "+" : "-", set: ""},
+                    etapowka: { needed: this.newOrderData.etapowka ? "+" : "-", set: ""},
+                    powyk: { needed: this.newOrderData.powyk ? "+" : "-", set: ""},
+                    faktura: { needed: "+", set: ""},
+                    extra: this.newOrderData.extra,
+                }
+                this.mutate(newOrder);
+                newOrder = "";
+                this.closeModal()
+            }   
+        }  
     }
-
 }
 </script>
 
@@ -95,6 +122,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 2;
     }
   
     .closeModal {
@@ -115,6 +143,9 @@ export default {
         margin: 10px 10px;
         width: 20px;
         height: 20px
+    }
+    input[type=date] {
+        width: 150px;
     }
     label:last-of-type, label:first-of-type {
         display: block;

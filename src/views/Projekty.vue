@@ -1,10 +1,12 @@
 <template>
     <section>
-        <NewOrderModal :modalOn="modalOn" @closeModal="openCloseModal" />
+        <NewOrderModal :newOrderModalOn="newOrderModalOn" @closeModal="openCloseNewOrder" />
+        <ProjectDetails :viewDetailsModalOn="viewDetailsModalOn" @closeModal="openCloseDetails" />
         <header>
-            <button @click="openCloseModal()">Nowy Projekt</button>
+            <button @click="openCloseNewOrder()">Nowy Projekt</button>
         </header>
         <table>
+
             <tr>
                 <td></td>
                 <td>Nazwa</td>
@@ -18,49 +20,95 @@
                 <td>Powykonawcza</td>
                 <td>Faktura</td> 
             </tr>
-            <tr v-for="item in getCurrOrders" :key="getCurrOrders.indexOf(item)">
-                <td>{{ getCurrOrders.indexOf(item) }}</td>
-                <td>{{ item.name }}</td>
+
+            <tr class="order" v-for="item in getCurrOrders" :key="getCurrOrders.indexOf(item)">
+                <td>{{ getCurrOrders.indexOf(item)+1 }}.</td>
+                <td @dblclick="openCloseDetails()">{{ item.name }} </td>
                 <td>{{ item.termin }}</td>
-                <td>{{ !item.projekt.set ? item.projekt.needed : item.projekt.set }}</td>
-                <td>{{ !item.ppb.set ? item.ppb.needed : item.ppb.set }}</td>
-                <td>{{ !item.numeracja.set ? item.numeracja.needed : item.numeracja.set }}</td>
-                <td>{{ !item.wypis.set ? item.wypis.needed : item.wypis.set }}</td>
-                <td>{{ !item.zajecie.set ? item.zajecie.needed : item.zajecie.set }} </td>
-                <td>{{ !item.etapowka.set ? item.etapowka.needed : item.etapowka.set }}</td>
-                <td>{{ !item.powyk.set ? item.powyk.needed : item.powyk.set }}</td>
-                <td>{{ !item.faktura.set ? item.faktura.needed : item.faktura.set }}</td> 
+                <td>
+                    {{ !item.projekt.set ? item.projekt.needed : item.projekt.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.projekt.needed === '+' && !item.projekt.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>
+                        <input type="text">
+                    </div>
+                </td>
+                <td>
+                    {{ !item.ppb.set ? item.ppb.needed : item.ppb.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.ppb.needed === '+' && !item.ppb.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.numeracja.set ? item.numeracja.needed : item.numeracja.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.numeracja.needed === '+' && !item.numeracja.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.wypis.set ? item.wypis.needed : item.wypis.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.wypis.needed === '+' && !item.wypis.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.zajecie.set ? item.zajecie.needed : item.zajecie.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.zajecie.needed === '+' && !item.zajecie.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.etapowka.set ? item.etapowka.needed : item.etapowka.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.etapowka.needed === '+' && !item.etapowka.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.powyk.set ? item.powyk.needed : item.powyk.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.powyk.needed === '+' && !item.powyk.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td>
+                <td>
+                    {{ !item.faktura.set ? item.faktura.needed : item.faktura.set }} 
+                    <img @click="showUpdatePanel(getCurrOrders.indexOf(item))" class="edit" v-if="item.faktura.needed === '+' && !item.faktura.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div></div>
+                </td> 
             </tr>
+            
         </table>
-        
+
     </section>
 </template>
 
 <script>
 import NewOrderModal from "@/components/NewOrderModal.vue"
+import ProjectDetails from "@/components/ProjectDetails.vue"
+
 import { mapGetters, mapActions } from "vuex"
 
 export default {
     name: "Projekty",
     components: {
         NewOrderModal,
+        ProjectDetails,
     },
     data() {
         return {
-            modalOn: false,
+            newOrderModalOn: false,
+            viewDetailsModalOn: false,
+            quickUpdatedData: "",
         }
     },
     methods: {
         ...mapActions(['mutate']),
-        openCloseModal(){
-            this.modalOn = !this.modalOn
+        openCloseNewOrder(){
+            this.newOrderModalOn = !this.newOrderModalOn
         },
-        createOrder() {
-
+        openCloseDetails(){
+            this.viewDetailsModalOn = !this.viewDetailsModalOn
         },
-        addOrder() {
+        // showUpdatePanel(idxOfUpdate)  {                             Dokończ to
+        //     const updatePanel = event.target.nextElementSibling;
+        //     updatePanel.classList.remove('hidden')
+        //     this.quickUpdatedData = idxOfUpdate;
+        // },
+        // quickUpdate() {
             
-        },
+        // }
     
     },
     computed: mapGetters(['getCurrOrders']),
@@ -94,7 +142,27 @@ export default {
     td {
         border: 1px solid black;
         padding: 7px;
+        position: relative;
+        min-width: 88px;
     }
-    tr > td:first-of-type {width: 40px;}
+    .edit {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        right: 5px;
+        border-radius: 2px;
+        padding: 2px
+    }
+    .edit:hover {
+        cursor: pionter;
+        background: rgb(75, 75, 75);
+    }
+    tr > td {text-align: center}
+    tr > td:first-of-type {width: 40px; text-align: left; min-width: 0;}
     tr > td:nth-of-type(2) {width: 30%;}
+    
+    .order:hover {
+        background: rgb(199, 199, 199);
+        cursor: pointer;
+    }   
 </style>

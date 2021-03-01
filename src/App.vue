@@ -37,4 +37,5 @@ body {
 #app {
   width: 100vw;
 }
+
 </style>
