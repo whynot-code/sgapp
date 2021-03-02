@@ -3,7 +3,7 @@
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
         <h1>Pruszcz Gałczyńskiego</h1>
         <aside>
-            <h3>Dziennik</h3>
+            <h3>Dziennik </h3>
             <div class='table'>
                 <table>
                     <tr>
@@ -20,7 +20,23 @@
                     </tr>
                 </table>
             </div>
+            <form>
+                <textarea type="text" name="wpis" id="wpis" cols="77" rows="3" placeholder="Treść Wpisu"></textarea><br/>
+                <select name="" id="">
+                    <option value="projekt">Projekt</option>
+                    <option value="ppb">PPB</option>
+                    <option value="numeracja">Numeracja</option>
+                    <option value="wypis">Wypis/Wyrys</option>
+                    <option value="zajecie">Zajęcie pasa</option>
+                    <option value="etapowka">Etapówka</option>
+                    <option value="powyk">Powykonawcza</option>
+                    <option value="faktura">Faktura</option>
+                    <option value="inny">Inny</option>
+                </select> 
+                <button>Dodaj wpis</button>
+            </form>
         </aside>
+
         <article>
             <h3>Informacje</h3>
             <ul>
@@ -42,10 +58,12 @@
                 </li>
             </ul>
         </article>
+
         <footer>
             <h3>Notatki <img class="edit" src="@/assets/icons/plus.svg" alt="Edit-Icon"/> </h3>
             <div id="note"></div>
         </footer>
+        
     </div>
 </template>
 
@@ -123,7 +141,7 @@ export default {
     article {
         width: 55%;
         padding: 0 25px 25px 25px;
-        height: 60vh;
+        height: 75vh;
     }
     ul {
         list-style-type: none;
@@ -154,6 +172,7 @@ export default {
     }
     footer > h3 {
         font-size: 30px;
+        position: relative;
     }
     #note {
         width: 100%;
@@ -164,5 +183,36 @@ export default {
     .plus {
         width: 30px;
         height: 30px;
+    }
+    button {
+        background: green;
+        padding: 3px;
+        border-radius: 4px;
+        border: none;
+    }
+
+
+    form {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        padding: 5px 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    #wpis {
+       text-align: center;
+       padding: 8px;
+       width: 80%;
+    }
+    select {
+        height: 30px;
+        margin: 6px;
+    }
+    form > button {
+        height: 30px;
+        margin: 6px;
+        padding: 8px;
     }
 </style>

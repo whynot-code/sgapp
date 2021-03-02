@@ -17,7 +17,9 @@ export default new Vuex.Store({
          etapowka: { needed: "-", set: "" },
          powyk: { needed: "+", set: "" },
          faktura: { needed: "+", set: "" },
-         extra: ""
+         extra: "",
+         dziennik: [],
+         notatki: []
       },
       {
          name: "Tczew Ogrodowa",
@@ -30,7 +32,9 @@ export default new Vuex.Store({
          etapowka: { needed: "+", set: "" },
          powyk: { needed: "+", set: "" },
          faktura: { needed: "+", set: "" },
-         extra: ""
+         extra: "",
+         dziennik: [],
+         notatki: []
       },
     ],
   },
