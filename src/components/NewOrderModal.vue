@@ -68,7 +68,7 @@ export default {
         newOrderModalOn: Boolean,
     },
     methods: {
-        ...mapActions(['mutate']),
+        ...mapActions(['mutateCurrOrders']),
         closeModal() {
             this.$emit("closeModal", this.newOrderModalOn)
             this.clearForm()
@@ -90,17 +90,19 @@ export default {
                 let newOrder = {
                     name: this.newOrderData.name,
                     termin: this.newOrderData.termin.split('-').reverse().join('.'),
-                    projekt: { needed: this.newOrderData.projekt ? "+" : "-", set: ""},
-                    ppb: { needed: this.newOrderData.ppb ? "+" : "-", set: ""},
-                    numeracja: { needed: this.newOrderData.numeracja ? "+" : "-", set: ""},
-                    wypis: { needed: this.newOrderData.wypis ? "+" : "-", set: ""},
-                    zajecie: { needed: this.newOrderData.zajecie ? "+" : "-", set: ""},
-                    etapowka: { needed: this.newOrderData.etapowka ? "+" : "-", set: ""},
-                    powyk: { needed: this.newOrderData.powyk ? "+" : "-", set: ""},
-                    faktura: { needed: "+", set: ""},
+                    projekt: { needed: this.newOrderData.projekt ? true : false, set: ""},
+                    ppb: { needed: this.newOrderData.ppb ? true : false, set: ""},
+                    numeracja: { needed: this.newOrderData.numeracja ? true : false, set: ""},
+                    wypis: { needed: this.newOrderData.wypis ? true : false, set: ""},
+                    zajecie: { needed: this.newOrderData.zajecie ? true : false, set: ""},
+                    etapowka: { needed: this.newOrderData.etapowka ? true : false, set: ""},
+                    powyk: { needed: this.newOrderData.powyk ? true : false, set: ""},
+                    faktura: { needed: true, set: ""},
                     extra: this.newOrderData.extra,
+                    dziennik: [{data: "data", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
+                    notatki: []
                 }
-                this.mutate(newOrder);
+                this.mutateCurrOrders(newOrder);
                 newOrder = "";
                 this.closeModal()
             }   

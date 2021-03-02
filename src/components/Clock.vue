@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
     name: "Clock",
     data() {
@@ -39,6 +41,7 @@ export default {
             ]
     }
 },
+    
     computed: {
         dayName(){
             return this.days[this.currTime.weekDay]
@@ -46,11 +49,13 @@ export default {
         monthName(){
             return this.months[this.currTime.month-1]
         },
+        
     },
     methods: {
+         ...mapActions(['mutateCurrTime']),
        getTime() {
            setInterval(() => {
-               return this.currTime = {
+               this.currTime = {
                     year: new Date().getFullYear(),
                     month: new Date().getMonth() + 1,
                     monthDay: new Date().getDate(),
@@ -58,7 +63,8 @@ export default {
                     seconds: new Date().getSeconds(),
                     minutes: new Date().getMinutes(),
                     hours: new Date().getHours(),
-               }
+               };
+               return this.mutateCurrTime(this.currTime)
            }, 1000)
        },
        fixDisplay(el){

@@ -1,39 +1,33 @@
 <template>
     <div :class="{hidden: !viewDetailsModalOn}" class="details">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
-        <h1>Pruszcz Gałczyńskiego</h1>
+        <h1>{{ order.name }}</h1>
         <aside>
-            <h3>Dziennik </h3>
+            <h3>Dziennik</h3>
             <div class='table'>
                 <table>
                     <tr>
                         <td>Data</td><td>Temat</td><td>Wpis</td>
                     </tr>
-                    <tr>
-                        <td>01.03.2021 13.06</td><td>PPB</td><td>Przekazano plac budowy - Tomasz Freza</td>
-                    </tr>
-                    <tr>
-                        <td>01.03.2021 13.06</td><td>PPB</td><td>Przekazano plac budowysssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss - Tomasz Freza</td>
-                    </tr>
-                    <tr>
-                        <td>01.03.2021 13.06</td><td>PPB</td><td>Przekazano plac budowy - Tomasz Freza</td>
+                    <tr v-for="detail in order.dziennik" :key="order.dziennik.indexOf(detail)">
+                        <td>{{ detail.data }}</td><td>{{ detail.typ }}</td><td>{{ detail.wpis }}</td>
                     </tr>
                 </table>
             </div>
             <form>
-                <textarea type="text" name="wpis" id="wpis" cols="77" rows="3" placeholder="Treść Wpisu"></textarea><br/>
-                <select name="" id="">
-                    <option value="projekt">Projekt</option>
-                    <option value="ppb">PPB</option>
-                    <option value="numeracja">Numeracja</option>
-                    <option value="wypis">Wypis/Wyrys</option>
-                    <option value="zajecie">Zajęcie pasa</option>
-                    <option value="etapowka">Etapówka</option>
-                    <option value="powyk">Powykonawcza</option>
-                    <option value="faktura">Faktura</option>
-                    <option value="inny">Inny</option>
+                <textarea v-model="newEntry.wpis" name="wpis" id="wpis" cols="77" rows="3" placeholder="Treść Wpisu"></textarea><br/>
+                <select v-model="newEntry.typ" name="" id="">
+                    <option value="Projekt">Projekt</option>
+                    <option value="PPB">PPB</option>
+                    <option value="Numeracja">Numeracja</option>
+                    <option value="Wypis/Wyrys">Wypis/Wyrys</option>
+                    <option value="Zajecie">Zajęcie pasa</option>
+                    <option value="Etapowka">Etapówka</option>
+                    <option value="Powykonawcza">Powykonawcza</option>
+                    <option value="Faktura">Faktura</option>
+                    <option value="Inny">Inny</option>
                 </select> 
-                <button>Dodaj wpis</button>
+                <button @click.prevent.stop="addNewEntry()">Dodaj wpis</button>
             </form>
         </aside>
 
@@ -44,32 +38,39 @@
                     Termin: 17.12.2021
                     <img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
                 </li>
-                <li>Projekt: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>PPB: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Numeracja: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Wypis: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Zajecie: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Etapówka: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Dokumentacja Powykonawcza: wymaga<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Faktura: brak<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
                     Dodatkowe Informacje:<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
-                    <p>sadsadsadsadsadadsadas</p>
+                    <p>{{order.extra}}</p>
                 </li>
             </ul>
         </article>
-
         <footer>
-            <h3>Notatki <img class="edit" src="@/assets/icons/plus.svg" alt="Edit-Icon"/> </h3>
+       
+            <h3>Notatki <img class="edit" src="@/assets/icons/plus.svg" alt="Edit-Icon"/></h3>
             <div id="note"></div>
         </footer>
-        
+        {{currTime}}
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
     name: "ProjectDetails",
+    data() {
+        return{
+            newEntry: {data: "", typ: "", wpis: ""},
+        }
+    },
     props: {
         viewDetailsModalOn: Boolean,
     },
@@ -77,6 +78,58 @@ export default {
         closeModal() {
             this.$emit("closeModal", this.viewDetailsModalOn)
         },
+        setStatus(status) {
+            if(status.set) {
+                return `${status.set}  ✅`
+            } else if(status.needed) {
+                return `wymaga`
+            } else {
+                return `Nie wymaga`
+            }
+        },
+        addNewEntry() {
+            const entryTextArea = document.querySelector('textarea')
+            const entrySelect = document.querySelector('select')
+            console.log( `${new Date().getDate()}` )
+
+            if(!this.newEntry.wpis) { //VALIDATE NEW ENTRY
+                entryTextArea.classList.add('invalid')
+            } else if(!this.newEntry.typ){
+                entrySelect.classList.add('invalid')
+            } else {
+                entrySelect.classList.remove('invalid')
+                entryTextArea.classList.remove('invalid')
+
+                const date = { 
+                    dzien: new Date().getDate(),
+                    miesiac: new Date().getMonth()+1,
+                    rok: new Date().getFullYear(),
+                    godzina: new Date().getHours(),
+                    minuta: new Date().getMinutes(),
+                    fixDate(el) {
+                        return el < 10 ? `0${el}` : el
+                    }
+                }
+                this.newEntry.data = `${date.fixDate(date.dzien)}.${date.fixDate(date.miesiac)}.${date.rok} ${date.fixDate(date.godzina)}:${date.fixDate(date.minuta)}`
+                const data = {
+                    data: this.newEntry.data,
+                    typ: this.newEntry.typ,
+                    wpis: this.newEntry.wpis
+                }
+                this.order.dziennik.unshift(data)
+
+                this.newEntry.data = "",
+                this.newEntry.typ = "",
+                this.newEntry.wpis = ""
+                
+            }
+        }
+    },
+    computed: {
+        ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
+        order(){ 
+            return this.getCurrOrders[this.currDetails]
+        }
     }
 }
 </script>
@@ -141,7 +194,7 @@ export default {
     article {
         width: 55%;
         padding: 0 25px 25px 25px;
-        height: 75vh;
+        height: 80vh;
     }
     ul {
         list-style-type: none;
@@ -214,5 +267,9 @@ export default {
         height: 30px;
         margin: 6px;
         padding: 8px;
+    }
+    .invalid {
+        border: 1px solid red;
+        outline: 1px solid red;
     }
 </style>
