@@ -33,12 +33,28 @@
 
         <article>
             <h3>Informacje</h3>
-            <ul>
+            <ul id="info">
+                <div id="editModal">
+                    <h3>Projekt</h3>
+                    <label for="nie">Wymaga</label>
+                    <input type="checkbox" name="nie" id="wymaga">
+                    <label for="tak">Nie wymaga</label>
+                    <input type="checkbox" name="nie" id=""><br />
+
+                    <label for="wykonano">Wykonano</label>
+                    <input type="checkbox" name="" id=""><br />
+
+                    <label for="info">Dodatkowe informacje</label><br />
+                    <textarea name="info" id="" cols="10" rows="5"></textarea>
+                    <button>Aktualizuj</button>
+                    <button>Anuluj</button>
+                </div>
+
                 <li>
                     Termin: 17.12.2021
                     <img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
                 </li>
-                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="editData()" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
@@ -51,6 +67,7 @@
                     <p>{{order.extra}}</p>
                 </li>
             </ul>
+           
         </article>
         <footer>
        
@@ -82,24 +99,25 @@ export default {
             if(status.set) {
                 return `${status.set}  ✅`
             } else if(status.needed) {
-                return `wymaga`
+                return `wymaga ❕`
             } else {
                 return `Nie wymaga`
             }
         },
+        editData() {
+
+        },
         addNewEntry() {
-            const entryTextArea = document.querySelector('textarea')
+            const entryTextArea = document.querySelector('#wpis')
             const entrySelect = document.querySelector('select')
-            console.log( `${new Date().getDate()}` )
-
-            if(!this.newEntry.wpis) { //VALIDATE NEW ENTRY
-                entryTextArea.classList.add('invalid')
-            } else if(!this.newEntry.typ){
-                entrySelect.classList.add('invalid')
-            } else {
-                entrySelect.classList.remove('invalid')
-                entryTextArea.classList.remove('invalid')
-
+            console.log(Boolean(this.newEntry.wpis))
+            console.log(Boolean(this.newEntry.typ))
+            
+            !this.newEntry.wpis ? entryTextArea.classList.add('invalid') : entryTextArea.classList.remove('invalid')
+            !this.newEntry.typ ? entrySelect.classList.add('invalid') : entrySelect.classList.remove('invalid')
+              
+             if(this.newEntry.wpis && this.newEntry.typ) { //ADD ENTRY
+        
                 const date = { 
                     dzien: new Date().getDate(),
                     miesiac: new Date().getMonth()+1,
@@ -191,19 +209,28 @@ export default {
     tr {
         line-height: 18px;
     }
+
+
     article {
-        width: 55%;
+        width: 51.5%;
         padding: 0 25px 25px 25px;
         height: 80vh;
     }
     ul {
         list-style-type: none;
-        font-size: 20.5px
+        font-size: 20.5px;
+        background: white;
+        padding: 10px 20px;
+        position: relative;
     }
     li {
         padding: 8px;
         width: 100%;
         position: relative;
+    }
+    li:last-of-type{
+        text-align: center;
+        margin-top: 15px;
     }
     .edit {
         width: 25px;
@@ -214,11 +241,23 @@ export default {
     li > p {
         width: 100%;
         height: 120px;
-        background: white;
+        background: rgba(128, 128, 128, 0.432);
         margin-top: 10px;
         padding: 8px;
         font-size: 18px;
     }
+    #editModal {
+        background: rgb(255, 255, 255);
+        position: absolute;
+        width: 70%;
+        height: 30vh;
+        left: 15%;
+        top: 20%;
+        z-index: 2;
+        box-shadow: 0px 0px 5px black;
+    }
+
+
     footer {
         position: relative;
         width: 100%;
