@@ -34,18 +34,19 @@
         <article>
             <h3>Informacje</h3>
             <ul id="info">
-                <div id="editModal">
+                <div class="hidden" id="editModal">
                     <h3>Projekt</h3>
-                    <label for="nie">Wymaga</label>
-                    <input type="checkbox" name="nie" id="wymaga">
-                    <label for="tak">Nie wymaga</label>
-                    <input type="checkbox" name="nie" id=""><br />
+
+                    <label for="tak">Wymaga</label>
+                    <input type="checkbox" name="tak" id="needed">
+                    <label for="nie">Nie wymaga</label>
+                    <input type="checkbox" name="nie" id="notneeded"><br />
 
                     <label for="wykonano">Wykonano</label>
                     <input type="checkbox" name="" id=""><br />
 
-                    <label for="info">Dodatkowe informacje</label><br />
-                    <textarea name="info" id="" cols="10" rows="5"></textarea>
+                    <label for="info">Dodatkowe informacje:</label><br />
+                    <textarea name="info" id="" cols="35" rows="5"></textarea><br />
                     <button>Aktualizuj</button>
                     <button>Anuluj</button>
                 </div>
@@ -250,11 +251,23 @@ export default {
         background: rgb(255, 255, 255);
         position: absolute;
         width: 70%;
-        height: 30vh;
+        height: 38vh;
         left: 15%;
         top: 20%;
         z-index: 2;
         box-shadow: 0px 0px 5px black;
+        padding: 5%;
+        text-align: center;
+    }
+    #editModal > input, #editModal > textarea {
+        margin: 10px 10px;
+    }
+    #editModal > button {
+        padding: 7px;
+        margin: 0 30px;
+    }
+    #editModal > button:nth-of-type(2) {
+        background: red;
     }
 
 
@@ -310,5 +323,8 @@ export default {
     .invalid {
         border: 1px solid red;
         outline: 1px solid red;
+    }
+    .hidden {
+        display: none;
     }
 </style>
