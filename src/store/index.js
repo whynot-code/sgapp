@@ -11,7 +11,7 @@ export default new Vuex.Store({
       {
          name: "Pruszcz Gałczyńskiego",
          termin: "26.02.2021",
-         projekt: { needed: true, set: "" },
+         projekt: { needed: true, set: "sad" },
          ppb: { needed: true, set: "" },
          numeracja: { needed: true, set: "" },
          wypis: { needed: false, set: "" },

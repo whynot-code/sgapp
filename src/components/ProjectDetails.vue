@@ -34,35 +34,33 @@
         <article>
             <h3>Informacje</h3>
             <ul id="info">
-                <div class="hidden" id="editModal">
-                    <h3>Projekt</h3>
+                <div v-if="paramEditor" id="editModal">
+                    <h3>{{ paramEditor[0] }}</h3>
 
-                    <label for="tak">Wymaga</label>
-                    <input type="checkbox" name="tak" id="needed">
-                    <label for="nie">Nie wymaga</label>
-                    <input type="checkbox" name="nie" id="notneeded"><br />
-
-                    <label for="wykonano">Wykonano</label>
-                    <input type="checkbox" name="" id=""><br />
+                    <label for="needed">Wymaga</label>
+                    <input type="radio" v-model="neededFlag" name="needed" value="1" id="needed">
+                    <label for="notneeded">Nie wymaga</label>
+                    <input type="radio" v-model="neededFlag" name="needed" value="0"  id="notneeded"><br />
+                    
+                    <label for="done">Wykonano</label>
+                    <input :disabled="neededFlag == '0' || neededFlag == ''" v-model="checked" type="checkbox" name="done" id="done"><br />
 
                     <label for="info">Dodatkowe informacje:</label><br />
-                    <textarea name="info" id="" cols="35" rows="5"></textarea><br />
-                    <button>Aktualizuj</button>
-                    <button>Anuluj</button>
+                    <textarea :disabled="!checked || neededFlag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
+
+                    <button @click="editParam()">Aktualizuj</button>
+                    <button @click="closeParamEditor()">Anuluj</button>
                 </div>
 
-                <li>
-                    Termin: 17.12.2021
-                    <img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                </li>
-                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="editData()" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Termin: 17.12.2021<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis/Wyrys', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" @click="openParamEditor('Dokumentacja Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
                     Dodatkowe Informacje:<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
                     <p>{{order.extra}}</p>
@@ -87,6 +85,9 @@ export default {
     data() {
         return{
             newEntry: {data: "", typ: "", wpis: ""},
+            paramEdtior: "",
+            neededFlag: "",
+            checked: false,
         }
     },
     props: {
@@ -104,9 +105,6 @@ export default {
             } else {
                 return `Nie wymaga`
             }
-        },
-        editData() {
-
         },
         addNewEntry() {
             const entryTextArea = document.querySelector('#wpis')
@@ -142,13 +140,25 @@ export default {
                 this.newEntry.wpis = ""
                 
             }
+        },
+        openParamEditor(...param){
+           this.paramEditor = param
+           this.paramEditor[1].needed ? this.neededFlag = "1" : this.neededFlag = "0"
+           this.paramEditor[1].set ? this.checked = true : this.checked = false
+        },
+        closeParamEditor() {
+            this.neededFlag = "",
+            this.paramEditor = ""
+        },
+        editParam(){
+
         }
     },
     computed: {
         ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
         order(){ 
             return this.getCurrOrders[this.currDetails]
-        }
+        },
     }
 }
 </script>
@@ -238,6 +248,7 @@ export default {
         height: 25px;
         position: absolute;
         right: 0;
+        cursor: pointer;
     }
     li > p {
         width: 100%;
