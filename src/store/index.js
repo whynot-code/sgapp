@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     currTime: "",
     currDetails: 0, //index of current details view
+
+    paramEditor: "",
+
     currOrders: [
       {
          name: "Pruszcz Gałczyńskiego",
@@ -46,17 +49,20 @@ export default new Vuex.Store({
   getters: {
     getCurrOrders: state => state.currOrders,
     currTime: state => state.currTime,
-    currDetails: state => state.currDetails
+    currDetails: state => state.currDetails,
+    paramEditor: state => state.paramEditor
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.push(newValue)},
     setCurrTime: (state, newValue) => {state.currTime = newValue},
-    setCurrDetails: (state, newValue) => {state.currDetails = newValue}
+    setCurrDetails: (state, newValue) => {state.currDetails = newValue},
+    setParamEditor: (state, newValue) => {state.paramEditor = newValue},
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
     mutateCurrTime({ commit }, newValue) { commit('setCurrTime', newValue) },
-    mutateCurrDetails({ commit }, newValue) { commit('setCurrDetails', newValue)}
+    mutateCurrDetails({ commit }, newValue) { commit('setCurrDetails', newValue)},
+    mutateParamEditor({ commit }, newValue) { commit('setParamEditor', newValue)}
   },
   modules: {
   }

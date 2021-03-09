@@ -34,7 +34,8 @@
         <article>
             <h3>Informacje</h3>
             <ul id="info">
-                <div v-if="paramEditor" id="editModal">
+                <DetailsEditor />
+                <!-- <div v-if="paramEditor" id="editModal">
                     <h3>{{ paramEditor[0] }}</h3>
 
                     <label for="needed">Wymaga</label>
@@ -50,7 +51,7 @@
 
                     <button @click="editParam()">Aktualizuj</button>
                     <button @click="closeParamEditor()">Anuluj</button>
-                </div>
+                </div> -->
 
                 <li>Termin: 17.12.2021<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
@@ -78,10 +79,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import DetailsEditor from "@/components/DetailsEditor.vue"
 
 export default {
     name: "ProjectDetails",
+    components: {
+        DetailsEditor,
+    },
     data() {
         return{
             newEntry: {data: "", typ: "", wpis: ""},
@@ -94,6 +99,7 @@ export default {
         viewDetailsModalOn: Boolean,
     },
     methods: {
+        ...mapActions(["mutateParamEditor"]),
         closeModal() {
             this.$emit("closeModal", this.viewDetailsModalOn)
         },
@@ -109,8 +115,6 @@ export default {
         addNewEntry() {
             const entryTextArea = document.querySelector('#wpis')
             const entrySelect = document.querySelector('select')
-            console.log(Boolean(this.newEntry.wpis))
-            console.log(Boolean(this.newEntry.typ))
             
             !this.newEntry.wpis ? entryTextArea.classList.add('invalid') : entryTextArea.classList.remove('invalid')
             !this.newEntry.typ ? entrySelect.classList.add('invalid') : entrySelect.classList.remove('invalid')
@@ -142,17 +146,8 @@ export default {
             }
         },
         openParamEditor(...param){
-           this.paramEditor = param
-           this.paramEditor[1].needed ? this.neededFlag = "1" : this.neededFlag = "0"
-           this.paramEditor[1].set ? this.checked = true : this.checked = false
+           this.mutateParamEditor(param)
         },
-        closeParamEditor() {
-            this.neededFlag = "",
-            this.paramEditor = ""
-        },
-        editParam(){
-
-        }
     },
     computed: {
         ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
@@ -258,28 +253,7 @@ export default {
         padding: 8px;
         font-size: 18px;
     }
-    #editModal {
-        background: rgb(255, 255, 255);
-        position: absolute;
-        width: 70%;
-        height: 38vh;
-        left: 15%;
-        top: 20%;
-        z-index: 2;
-        box-shadow: 0px 0px 5px black;
-        padding: 5%;
-        text-align: center;
-    }
-    #editModal > input, #editModal > textarea {
-        margin: 10px 10px;
-    }
-    #editModal > button {
-        padding: 7px;
-        margin: 0 30px;
-    }
-    #editModal > button:nth-of-type(2) {
-        background: red;
-    }
+   
 
 
     footer {
@@ -300,13 +274,7 @@ export default {
         width: 30px;
         height: 30px;
     }
-    button {
-        background: green;
-        padding: 3px;
-        border-radius: 4px;
-        border: none;
-    }
-
+  
 
     form {
         position: relative;
