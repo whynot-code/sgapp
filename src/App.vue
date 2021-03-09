@@ -37,5 +37,7 @@ body {
 #app {
   width: 100vw;
 }
-
+.invalid {
+    border: 2px solid red;
+}
 </style>

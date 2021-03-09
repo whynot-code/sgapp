@@ -35,23 +35,6 @@
             <h3>Informacje</h3>
             <ul id="info">
                 <DetailsEditor />
-                <!-- <div v-if="paramEditor" id="editModal">
-                    <h3>{{ paramEditor[0] }}</h3>
-
-                    <label for="needed">Wymaga</label>
-                    <input type="radio" v-model="neededFlag" name="needed" value="1" id="needed">
-                    <label for="notneeded">Nie wymaga</label>
-                    <input type="radio" v-model="neededFlag" name="needed" value="0"  id="notneeded"><br />
-                    
-                    <label for="done">Wykonano</label>
-                    <input :disabled="neededFlag == '0' || neededFlag == ''" v-model="checked" type="checkbox" name="done" id="done"><br />
-
-                    <label for="info">Dodatkowe informacje:</label><br />
-                    <textarea :disabled="!checked || neededFlag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
-
-                    <button @click="editParam()">Aktualizuj</button>
-                    <button @click="closeParamEditor()">Anuluj</button>
-                </div> -->
 
                 <li>Termin: 17.12.2021<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
@@ -74,7 +57,6 @@
             <h3>Notatki <img class="edit" src="@/assets/icons/plus.svg" alt="Edit-Icon"/></h3>
             <div id="note"></div>
         </footer>
-        {{currTime}}
     </div>
 </template>
 
