@@ -1,5 +1,5 @@
 <template>
-    <div :class="{hidden: !viewDetailsModalOn}" class="details">
+    <div v-if="currDetails" :class="{hidden: !viewDetailsModalOn}" class="details">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
         <h1>{{ order.name }}</h1>
         <aside>
@@ -36,10 +36,11 @@
             <ul id="info">
                 <DetailsEditor />
 
-                <li>Termin: 17.12.2021<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Termin: {{ order.termin }}<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Dziennik Budowy: {{ setStatus(order.dz) }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis/Wyrys', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
@@ -81,9 +82,10 @@ export default {
         viewDetailsModalOn: Boolean,
     },
     methods: {
-        ...mapActions(["mutateParamEditor"]),
+        ...mapActions(["mutateParamEditor", "mutateCurrDetails"]),
         closeModal() {
             this.$emit("closeModal", this.viewDetailsModalOn)
+            this.mutateCurrDetails("")
         },
         setStatus(status) {
             if(status.set) {
@@ -134,7 +136,11 @@ export default {
     computed: {
         ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
         order(){ 
-            return this.getCurrOrders[this.currDetails]
+            let currOrder = 0;
+            this.getCurrOrders.forEach(order => {
+                order.id === this.currDetails ? currOrder = order : null
+            })
+            return currOrder
         },
     }
 }

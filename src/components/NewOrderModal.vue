@@ -16,6 +16,9 @@
             <label for="ppb">PPB:</label>
             <input type="checkbox" v-model="newOrderData.ppb" name="ppb" id="ppb">
 
+            <label for="dz">Dziennik budowy:</label>
+            <input type="checkbox" v-model="newOrderData.dz" name="dz" id="dz">
+
             <label for="numerajca">Numeracja:</label>
             <input type="checkbox" v-model="newOrderData.numeracja" value="true"  name="numeracja" id="numeracja">
 
@@ -43,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
     name: "NewOrderModal",
@@ -54,18 +57,25 @@ export default {
                 termin: "",
                 projekt: "",
                 ppb: "",
+                dz: "",
                 numeracja: "",
                 wypis: "",
                 zajecie: "",
                 etapowka: "",
                 powyk: "",
                 faktura: true,
-                extra: ""
+                extra: "",
             }
         }
     },
     props: {
         newOrderModalOn: Boolean,
+    },
+    computed: {
+        ...mapGetters(["getCurrOrders", "currTime"]),
+        nextId() {
+            return this.getCurrOrders[0].id
+        }
     },
     methods: {
         ...mapActions(['mutateCurrOrders']),
@@ -80,18 +90,28 @@ export default {
         },
         addOrder() {
             let nameInput = document.querySelector("#name");
+            let terminInput = document.querySelector("#date")
 
             if(!this.newOrderData.name) {   //VALIDATE EMPTY ORDER
                 nameInput.setAttribute("placeholder", "Bez nazwy nie polecimy! :(") ;
                 nameInput.style.border = '1px solid red';
-            } else{
+            } 
+            else if(!this.newOrderData.termin) {
+                terminInput.style.border = "1px solid red"
+            }
+                else{
                 nameInput.style.border = 'none';
+                terminInput.style.border = 'none';
+
+                let time = `${this.fixDate(this.currTime.monthDay)}.${this.fixDate(this.currTime.month)}.${this.currTime.year} ${this.fixDate(this.currTime.hours)}:${this.fixDate(this.currTime.minutes)}`
 
                 let newOrder = {
+                    id: this.nextId+1,
                     name: this.newOrderData.name,
                     termin: this.newOrderData.termin.split('-').reverse().join('.'),
                     projekt: { needed: this.newOrderData.projekt ? true : false, set: ""},
                     ppb: { needed: this.newOrderData.ppb ? true : false, set: ""},
+                    dz: { needed: this.newOrderData.dz ? true : false, set: ""},
                     numeracja: { needed: this.newOrderData.numeracja ? true : false, set: ""},
                     wypis: { needed: this.newOrderData.wypis ? true : false, set: ""},
                     zajecie: { needed: this.newOrderData.zajecie ? true : false, set: ""},
@@ -99,13 +119,17 @@ export default {
                     powyk: { needed: this.newOrderData.powyk ? true : false, set: ""},
                     faktura: { needed: true, set: ""},
                     extra: this.newOrderData.extra,
-                    dziennik: [{data: "data", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
+                    dziennik: [{data: time, typ: "Zlecenie", wpis: "Dodano zlecenie."}],
                     notatki: []
                 }
                 this.mutateCurrOrders(newOrder);
+                console.log(this.getCurrOrders)
                 newOrder = "";
                 this.closeModal()
             }   
+        },
+        fixDate(el) {
+            return el < 10 ? `0${el}` : el
         }  
     }
 }

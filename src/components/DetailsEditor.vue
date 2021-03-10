@@ -8,15 +8,15 @@
     </div>
     <div v-else>
         <label for="needed">Wymaga</label>
-        <input type="radio" v-model="neededFlag" name="needed" value="1" id="needed">
+        <input type="radio" v-model="flag" name="needed" value="1" id="needed">
         <label for="notneeded">Nie wymaga</label>
-        <input type="radio" v-model="neededFlag" name="needed" value="0"  id="notneeded"><br />
+        <input type="radio" v-model="flag" name="needed" value="0"  id="notneeded"><br />
         
         <label for="done">Wykonano</label>
-        <input :disabled="neededFlag == '0' || neededFlag == ''" v-model="checked" type="checkbox" name="done" id="done"><br />
+        <input :disabled="flag == '0' || flag == ''" v-model="check" type="checkbox" name="done" id="done"><br />
 
         <label for="info">Dodatkowe informacje:</label><br />
-        <textarea :disabled="!checked || neededFlag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
+        <textarea v-model="textArea" :disabled="!check || flag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
     </div>
 
     <button @click="editParam()">Aktualizuj</button>
@@ -32,16 +32,19 @@ export default {
     data(){
         return{
             date: "",
-            updatedData: ""
+            flag: "",
+            check: "",
+            updatedData: "",
+            textArea: ""
         }
     },
     methods: {
-        ...mapActions(["mutateParamEditor"]),
+        ...mapActions(["mutateParamEditor", "updateCurrOrder"]),
         closeParamEditor() {
             this.mutateParamEditor("")
         },
         editParam(){
-            if(this.paramEditor[0]==="Termin"){
+            if(this.paramEditor[0]==="Termin"){ //Termin Update
                 let input = document.querySelector('#editModal')
                 input = input.querySelector('input')
                 
@@ -52,18 +55,24 @@ export default {
                     input.classList.remove('invalid')
                     this.updatedData = this.paramEditor
                     this.updatedData[1] = this.date.split("-").reverse().join(".")
-                    console.log(this.updatedData)
-                    this.mutateParamEditor(this.updatedData)
+
+                    this.updateCurrOrder(this.updatedData)
+                    
                     this.closeParamEditor()
                 }
             }
-            else {
-                null
+            else { //Other details Update
+                this.flag === "0" ? this.flag = false : this.flag = true
+                this.updatedData = [this.paramEditor[0], { needed: this.flag, set: this.textArea }]
+    
+                this.updateCurrOrder(this.updatedData)
+                this.closeParamEditor()
+                this.textArea = ""
             }
         }
     },
     computed: {
-        ...mapGetters(["paramEditor"]),
+        ...mapGetters(["paramEditor", 'currDetails', 'getCurrOrders', 'currTime']),
         neededFlag() {
             if(this.paramEditor) {
                  return this.paramEditor[1].needed ? "1" : "0"
@@ -73,7 +82,18 @@ export default {
             if(this.paramEditor) {
                  return this.paramEditor[1].set ? true : false
             } else return false
-        }
+        },
+        order(){ 
+            return this.getCurrOrders[this.currDetails]
+        },
+    },
+    watch: {
+        neededFlag() {
+           return this.flag = this.neededFlag
+        },
+        checked(){
+            return this.check = this.checked
+        },
     }
 }
 </script>
