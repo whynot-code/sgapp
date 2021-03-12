@@ -1,27 +1,31 @@
 <template>
+    <div class="bg" v-if="paramEditor">
+        <div id="editModal">
+        <h3>{{ paramEditor[0] }}</h3>
+        <div v-if="paramEditor[0]==='Termin'">
+            <label for="date">Zmień datę:</label>
+            <input type="date" v-model="date" name="date" value="1" id="date">
+        </div>
+        <div v-else-if="paramEditor[0]==='Extra'">
+            iosahfdoisaifd
+        </div>
+        <div v-else>
+            <label for="needed">Wymaga</label>
+            <input type="radio" v-model="flag" name="needed" value="1" id="needed">
+            <label for="notneeded">Nie wymaga</label>
+            <input type="radio" v-model="flag" name="needed" value="0"  id="notneeded"><br />
+            
+            <label for="done">Wykonano</label>
+            <input :disabled="flag == '0' || flag == ''" v-model="check" type="checkbox" name="done" id="done"><br />
 
-  <div v-if="paramEditor" id="editModal">
-    <h3>{{ paramEditor[0] }}</h3>
-    <div v-if="paramEditor[0]==='Termin'">
-        <label for="date">Zmień datę:</label>
-        <input type="date" v-model="date" name="date" value="1" id="date">
+            <label for="info">Dodatkowe informacje:</label><br />
+            <textarea v-model="textArea" :disabled="!check || flag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
+        </div>
+
+        <button @click="editParam()">Aktualizuj</button>
+        <button @click="closeParamEditor()">Anuluj</button>
+        </div>
     </div>
-    <div v-else>
-        <label for="needed">Wymaga</label>
-        <input type="radio" v-model="flag" name="needed" value="1" id="needed">
-        <label for="notneeded">Nie wymaga</label>
-        <input type="radio" v-model="flag" name="needed" value="0"  id="notneeded"><br />
-        
-        <label for="done">Wykonano</label>
-        <input :disabled="flag == '0' || flag == ''" v-model="check" type="checkbox" name="done" id="done"><br />
-
-        <label for="info">Dodatkowe informacje:</label><br />
-        <textarea v-model="textArea" :disabled="!check || flag == '0'" name="info" id="" cols="35" rows="5" placeholder="np. data, sygnatura, kto przekazał itp." ></textarea><br />
-    </div>
-
-    <button @click="editParam()">Aktualizuj</button>
-    <button @click="closeParamEditor()">Anuluj</button>
-</div>
 </template>
 
 <script>
@@ -63,6 +67,10 @@ export default {
             }
             else { //Other details Update
                 this.flag === "0" ? this.flag = false : this.flag = true
+
+                !this.check || !this.flag ? this.textArea = "" : null
+                this.check && this.flag && this.textArea === "" ? this.textArea = true : null
+
                 this.updatedData = [this.paramEditor[0], { needed: this.flag, set: this.textArea }]
     
                 this.updateCurrOrder(this.updatedData)
@@ -86,6 +94,11 @@ export default {
         order(){ 
             return this.getCurrOrders[this.currDetails]
         },
+        set(){
+            if(this.paramEditor) {
+            return this.paramEditor[1].set
+            } else return ""
+         },
     },
     watch: {
         neededFlag() {
@@ -94,6 +107,9 @@ export default {
         checked(){
             return this.check = this.checked
         },
+        set(){
+            return this.textArea = this.set
+        }
     }
 }
 </script>
@@ -109,6 +125,7 @@ export default {
         box-shadow: 0px 0px 5px black;
         padding: 5%;
         text-align: center;
+        z-index: 1;
     }
     #editModal input, #editModal textarea {
         margin: 10px 10px;
@@ -125,5 +142,15 @@ export default {
         padding: 3px;
         border-radius: 4px;
         border: none;
+    }
+
+    .bg {
+        position: absolute;
+        width: 100%;
+        height: 66vh;
+        background: rgba(0, 0, 0, 0.048);
+        left: 0;
+        top: 0;
+        z-index: 1;
     }
 </style>

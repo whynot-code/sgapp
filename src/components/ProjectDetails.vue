@@ -41,14 +41,19 @@
                 <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Dziennik Budowy: {{ setStatus(order.dz) }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Wypis: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis/Wyrys', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Wypis/Wyrys: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" @click="openParamEditor('Dokumentacja Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
-                    Dodatkowe Informacje:<img class="edit" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
-                    <p>{{order.extra}}</p>
+                    Dodatkowe Informacje:
+                    <img class="edit" @click="extra=false" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <img v-if="!extra" class="accept" @click="editExtra('Faktura', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
+                    <img v-if="!extra" class="decline" @click="extra=true" src="@/assets/icons/erase.svg" alt="Decline-Icon"/>
+                    <p>
+                        <textarea :disabled="extra" v-model="order.extra"></textarea>
+                    </p>
                 </li>
             </ul>
            
@@ -76,20 +81,21 @@ export default {
             paramEdtior: "",
             neededFlag: "",
             checked: false,
+            extra: true,
         }
     },
     props: {
         viewDetailsModalOn: Boolean,
     },
     methods: {
-        ...mapActions(["mutateParamEditor", "mutateCurrDetails"]),
+        ...mapActions(["mutateParamEditor", "mutateCurrDetails", "updateCurrOrder"]),
         closeModal() {
             this.$emit("closeModal", this.viewDetailsModalOn)
             this.mutateCurrDetails("")
         },
         setStatus(status) {
             if(status.set) {
-                return `${status.set}  ✅`
+                return typeof status.set === 'boolean' ? `✅` : `${status.set}  ✅`
             } else if(status.needed) {
                 return `wymaga ❕`
             } else {
@@ -132,6 +138,10 @@ export default {
         openParamEditor(...param){
            this.mutateParamEditor(param)
         },
+        editExtra(...param){
+            this.updateCurrOrder(param)
+            this.extra = true
+        }
     },
     computed: {
         ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
@@ -221,29 +231,44 @@ export default {
         padding: 8px;
         width: 100%;
         position: relative;
+        word-wrap: break-word;
     }
     li:last-of-type{
         text-align: center;
         margin-top: 15px;
     }
-    .edit {
+    .edit, .accept, .decline {
         width: 25px;
         height: 25px;
         position: absolute;
         right: 0;
         cursor: pointer;
     }
+    .accept { right: 30px}
     li > p {
         width: 100%;
         height: 120px;
-        background: rgba(128, 128, 128, 0.432);
         margin-top: 10px;
+        font-size: 15px;
+        position: relative;
         padding: 8px;
-        font-size: 18px;
+        text-align: left;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
-   
-
-
+   p > textarea {
+       font-size: 15px;
+       padding: 8px;
+       position: absolute;
+       left: 0;
+       top: 0;
+       background: transparent;
+       width: 100%;
+       max-width: 100%;
+       height: 13vh;
+       max-height: 13vh;
+       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       background: rgba(128, 128, 128, 0.932);
+   }
     footer {
         position: relative;
         width: 100%;
