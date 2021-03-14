@@ -7,7 +7,6 @@
             <input type="date" v-model="date" name="date" value="1" id="date">
         </div>
         <div v-else-if="paramEditor[0]==='Extra'">
-            iosahfdoisaifd
         </div>
         <div v-else>
             <label for="needed">Wymaga</label>
@@ -108,7 +107,7 @@ export default {
             return this.check = this.checked
         },
         set(){
-            return this.textArea = this.set
+            return typeof this.set === "boolean" ? this.textArea = "" : this.textArea = this.set
         }
     }
 }

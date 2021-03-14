@@ -12,6 +12,7 @@ import Header from "@/components/Header.vue"
 import Nav from "@/components/Nav.vue"
 import Main from "@/components/Main.vue"
 import RightSection from "@/components/RightSection.vue"
+import { mapActions } from 'vuex'
 
 export default {
   name: "app",
@@ -20,7 +21,19 @@ export default {
     Nav,
     Main,
     RightSection,
-  }
+  },
+  methods: {
+    ...mapActions(["mutateCurrClick"])
+  },
+  data(){
+    return{
+    }
+  },
+  mounted() {
+      return window.addEventListener('click', ( {target} ) => {
+          this.mutateCurrClick(target)
+      })
+  },
 }
 </script>
 

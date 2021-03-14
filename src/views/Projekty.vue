@@ -28,49 +28,66 @@
                 <td>{{ item.termin }}</td>
                 <td>
                     {{ !item.projekt.set ? setStatus(item.projekt.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.projekt.needed && !item.projekt.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div>
+                    <img @click="showUpdatePanel($event, 'Projekt', item.id)" class="edit" v-if="item.projekt.needed && !item.projekt.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
                     </div>
                 </td>
                 <td>
                     {{ !item.ppb.set ? setStatus(item.ppb.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.ppb.needed && !item.ppb.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'PPB', item.id)" class="edit" v-if="item.ppb.needed && !item.ppb.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.dz.set ? setStatus(item.dz.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.dz.needed && !item.dz.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Dziennik', item.id)" class="edit" v-if="item.dz.needed && !item.dz.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.numeracja.set ? setStatus(item.numeracja.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.numeracja.needed && !item.numeracja.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Numeracja', item.id)" class="edit" v-if="item.numeracja.needed && !item.numeracja.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/> 
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.wypis.set ? setStatus(item.wypis.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.wypis.needed && !item.wypis.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Wypis', item.id)" class="edit" v-if="item.wypis.needed && !item.wypis.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.zajecie.set ? setStatus(item.zajecie.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.zajecie.needed && !item.zajecie.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Zajęcie pasa', item.id)" class="edit" v-if="item.zajecie.needed && !item.zajecie.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.etapowka.set ? setStatus(item.etapowka.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.etapowka.needed && !item.etapowka.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Etapówka', item.id)" class="edit" v-if="item.etapowka.needed && !item.etapowka.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.powyk.set ? setStatus(item.powyk.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.powyk.needed && !item.powyk.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Powykonawcza', item.id)" class="edit" v-if="item.powyk.needed && !item.powyk.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td>
                 <td>
                     {{ !item.faktura.set ? setStatus(item.faktura.needed) : "✔" }} 
-                    <img @click="showUpdatePanel(item.id)" class="edit" v-if="item.faktura.needed && !item.faktura.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <div></div>
+                    <img @click="showUpdatePanel($event, 'Faktura', item.id)" class="edit" v-if="item.faktura.needed && !item.faktura.set" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div id="updatePanel">
+                        <UpdatePanel />
+                    </div>
                 </td> 
             </tr>
             
@@ -82,6 +99,7 @@
 <script>
 import NewOrderModal from "@/components/NewOrderModal.vue"
 import ProjectDetails from "@/components/ProjectDetails.vue"
+import UpdatePanel from "@/components/QuickUpdateModal.vue"
 
 import { mapGetters, mapActions } from "vuex"
 
@@ -90,16 +108,16 @@ export default {
     components: {
         NewOrderModal,
         ProjectDetails,
+        UpdatePanel
     },
     data() {
         return {
             newOrderModalOn: false,
             viewDetailsModalOn: false,
-            quickUpdatedData: "",
         }
     },
     methods: {
-        ...mapActions(["mutateCurrDetails"]),
+        ...mapActions(["mutateCurrDetails", "mutateQuickUpdatedData"]),
         openCloseNewOrder(){
             this.newOrderModalOn = !this.newOrderModalOn
         },
@@ -110,16 +128,11 @@ export default {
         },
         setStatus(status) {
             return status ? "+" : "-"
+        },
+        showUpdatePanel(...param) {
+            this.mutateQuickUpdatedData(param)
+            this.mutateCurrDetails(param[2])
         }
-        // showUpdatePanel(idxOfUpdate)  {                             Dokończ to
-        //     const updatePanel = event.target.nextElementSibling;
-        //     updatePanel.classList.remove('hidden')
-        //     this.quickUpdatedData = idxOfUpdate;
-        // },
-        // quickUpdate() {
-            
-        // }
-    
     },
     computed: mapGetters(['getCurrOrders']),
 }
@@ -130,6 +143,7 @@ export default {
         height: 92vh;
         overflow-y: scroll;
         position: relative;
+        z-index: 1;
     }
     button {
         background: green;
@@ -148,6 +162,7 @@ export default {
     table {
         width: 100%;
         border-spacing: 0;
+        z-index: 1;
     }
     td {
         border: 1px solid black;
@@ -167,12 +182,15 @@ export default {
         cursor: pionter;
         background: rgb(75, 75, 75);
     }
-    tr > td {text-align: center}
-    tr > td:first-of-type {width: 40px; text-align: left; min-width: 0;}
+    tr > td {text-align: center; word-break: break-all;}
+    tr > td:first-of-type {width: 60px; text-align: left; min-width: 0;}
     tr > td:nth-of-type(2) {width: 30%;}
     
     .order:hover {
         background: rgb(199, 199, 199);
         cursor: pointer;
     }   
+    #updatePanel {
+        z-index: 1;
+    }
 </style>

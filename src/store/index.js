@@ -5,12 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
     currTime: "",
+    currClick: "",
     currDetails: 0, //index of current details view
-
     paramEditor: "",
-
+    quickUpdatedData: "",
     currOrders: [
       {
          id: 2,
@@ -55,7 +54,9 @@ export default new Vuex.Store({
     getCurrOrders: state => state.currOrders,
     currTime: state => state.currTime,
     currDetails: state => state.currDetails,
-    paramEditor: state => state.paramEditor
+    paramEditor: state => state.paramEditor,
+    quickUpdatedData: state => state.quickUpdatedData,
+    currClick: state => state.currClick,
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -81,6 +82,8 @@ export default new Vuex.Store({
     setCurrTime: (state, newValue) => {state.currTime = newValue},
     setCurrDetails: (state, newValue) => {state.currDetails = newValue},
     setParamEditor: (state, newValue) => {state.paramEditor = newValue},
+    setQuickUpdatedData: (state, newValue) => {state.quickUpdatedData = newValue},
+    setCurrClick: (state, newValue) => {state.currClick = newValue}
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -88,6 +91,8 @@ export default new Vuex.Store({
     mutateCurrTime({ commit }, newValue) { commit('setCurrTime', newValue) },
     mutateCurrDetails({ commit }, newValue) { commit('setCurrDetails', newValue)},
     mutateParamEditor({ commit }, newValue) { commit('setParamEditor', newValue)},
+    mutateQuickUpdatedData({ commit }, newValue) { commit('setQuickUpdatedData', newValue)},
+    mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)}
   },
   modules: {
   }
