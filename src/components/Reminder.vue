@@ -34,22 +34,23 @@ export default {
         ...mapGetters(["currTime", "getCurrOrders"])
     },
     methods: {
-        checkTerm(){
-            // let closestTerms = [];
-            const {monthDay, month, year} = this.currTime
-            console.log(month, monthDay, year)
-            console.log(this.currTime)
-            // this.getCurrOrders.forEach((order, idx) => {
-                
-            // })
-        }
+        // checkTerm(){
+        //     setTimeout(() => {
+        //         // let closestTerms = [];
+        //     const {monthDay, month, year} = this.currTime
+        //     console.log(month, monthDay, year)
+        //     // this.getCurrOrders.forEach((order) => {
+        //         // const termArray = order.termin.split(".")
+        //         //  const howManyYears = () => { return Number(termArray[2]) <= year ? 0 : Number(termArray[2]) - year }
+        //         //  const howManyMonths = () => { return Number(termArray[1]) <= month ? 0 : Number(termArray[1]) - month } 
+        //         //  const howManyDays = () => { return Number(termArray[0]) <= monthDay ? 0 : Number(termArray[0]) - monthDay }
+        //     // })
+        //     // }, 1000)
+        // }
     },
     mounted(){
-        this.checkTerm();
+        // this.checkTerm();
     },
-    updated(){
-        this.checkTerm();
-    }
 }
 </script>
 
