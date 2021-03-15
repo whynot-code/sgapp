@@ -22,7 +22,7 @@
                 <td>Faktura</td> 
             </tr>
 
-            <tr class="order" v-for="item in getCurrOrders" :key="item.id">
+            <tr class="order" v-for="item in currOrders" :key="item.id">
                 <td>{{ getCurrOrders.indexOf(item)+1 }}.</td>
                 <td @dblclick="openCloseDetails(item.id)">{{ item.name }} </td>
                 <td>{{ item.termin }}</td>
@@ -90,9 +90,7 @@
                     </div>
                 </td> 
             </tr>
-            
         </table>
-
     </section>
 </template>
 
@@ -134,7 +132,13 @@ export default {
             this.mutateCurrDetails(param[2])
         }
     },
-    computed: mapGetters(['getCurrOrders']),
+    computed: {
+        ...mapGetters(['getCurrOrders', 'searchedData']),
+        currOrders() {
+            return this.searchedData.length > 0 ? this.searchedData : this.getCurrOrders
+        }
+    }
+    
 }
 </script>
 

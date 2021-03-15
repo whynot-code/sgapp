@@ -2,9 +2,6 @@
   <header class="header">
     <div>
       <input v-model="givenValue" @keyup="searchIt" type="search" name="search" id="search">
-      <tr v-for="order in result" :key="order.id">
-        <p>{{ order.name }}</p>
-      </tr>
     </div>
     <Clock />
     <h1>SG Sakowicz Tarakan</h1>
@@ -12,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Clock from "@/components/Clock.vue"
 
 export default {
@@ -30,13 +27,15 @@ export default {
     ...mapGetters(["getCurrOrders"]),
   },
   methods: {
+    ...mapActions(["setSearchedData"]),
     searchIt(){
       this.result = []
       if(this.givenValue){
       this.getCurrOrders.forEach(order => {
-        order.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.unshift(order) : null
+        order.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(order) : null
       })
       }
+      this.setSearchedData(this.result)
     }
   }
 }

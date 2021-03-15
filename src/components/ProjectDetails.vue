@@ -44,7 +44,7 @@
                 <li>Wypis/Wyrys: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" @click="openParamEditor('Dokumentacja Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" @click="openParamEditor('Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
                     Dodatkowe Informacje:

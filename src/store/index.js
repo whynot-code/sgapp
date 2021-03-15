@@ -10,6 +10,7 @@ export default new Vuex.Store({
     currDetails: 0, //index of current details view
     paramEditor: "",
     quickUpdatedData: "",
+    searchedData: [],
     currOrders: [
       {
          id: 2,
@@ -57,6 +58,7 @@ export default new Vuex.Store({
     paramEditor: state => state.paramEditor,
     quickUpdatedData: state => state.quickUpdatedData,
     currClick: state => state.currClick,
+    searchedData: state => state.searchedData,
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -72,7 +74,7 @@ export default new Vuex.Store({
               case "Wypis": order.wypis = updatedData[1]; break;
               case "Zajęcie pasa": order.zajecie = updatedData[1]; break;
               case "Etapówka": order.etapowka = updatedData[1]; break;
-              case "Dokumentacja Powykonawcza": order.powyk = updatedData[1]; break;
+              case "Powykonawcza": order.powyk = updatedData[1]; break;
               case "Faktura": order.faktura = updatedData[1]; break;
               case "Extra": order.extra = updatedData[1]; break;
             }
@@ -83,7 +85,8 @@ export default new Vuex.Store({
     setCurrDetails: (state, newValue) => {state.currDetails = newValue},
     setParamEditor: (state, newValue) => {state.paramEditor = newValue},
     setQuickUpdatedData: (state, newValue) => {state.quickUpdatedData = newValue},
-    setCurrClick: (state, newValue) => {state.currClick = newValue}
+    setCurrClick: (state, newValue) => {state.currClick = newValue},
+    setSearchedData: (state, newValue) => {state.searchedData = newValue},
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -92,7 +95,8 @@ export default new Vuex.Store({
     mutateCurrDetails({ commit }, newValue) { commit('setCurrDetails', newValue)},
     mutateParamEditor({ commit }, newValue) { commit('setParamEditor', newValue)},
     mutateQuickUpdatedData({ commit }, newValue) { commit('setQuickUpdatedData', newValue)},
-    mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)}
+    mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)},
+    setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)}
   },
   modules: {
   }
