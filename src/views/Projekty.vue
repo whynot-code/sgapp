@@ -132,14 +132,14 @@ export default {
         showUpdatePanel(...param) {
             this.mutateQuickUpdatedData(param)
             this.mutateCurrDetails(param[2])
-        }
+        },
     },
     computed: {
         ...mapGetters(['getCurrOrders', 'searchedData']),
         currOrders() {
             return this.searchedData.length > 0 ? this.searchedData : this.getCurrOrders
         }
-    }
+    },
     
 }
 </script>
@@ -191,6 +191,10 @@ export default {
     tr > td {text-align: center; word-break: break-all;}
     tr > td:first-of-type {width: 60px; text-align: left; min-width: 0;}
     tr > td:nth-of-type(2) {width: 30%;}
+
+    tr{
+        background: cornsilk;
+    }
     
     .order:hover {
         background: rgb(199, 199, 199);

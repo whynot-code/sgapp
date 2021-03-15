@@ -172,7 +172,7 @@ export default {
         padding: 3px 7px;
         border: 1px solid black;
         border-radius: 5px;
-        background: red;
+        background: rgb(0, 140, 255);
         position: relative;
         left: 92%;
         position: absolute

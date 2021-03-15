@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import testContent from '@/assets/testContent.js'
 
 Vue.use(Vuex)
 
@@ -11,45 +12,7 @@ export default new Vuex.Store({
     paramEditor: "",
     quickUpdatedData: "",
     searchedData: [],
-    currOrders: [
-      {
-         id: 2,
-         name: "Pruszcz Gałczyńskiego",
-         termin: "26.02.2021",
-         projekt: { needed: true, set: "sad" },
-         ppb: { needed: true, set: "" },
-         dz: { needed: true, set: "" },
-         numeracja: { needed: true, set: "" },
-         wypis: { needed: false, set: "" },
-         zajecie: { needed: false, set: "" },
-         etapowka: { needed: false, set: "" },
-         powyk: { needed: true, set: "" },
-         faktura: { needed: true, set: "" },
-         extra: "qwerty",
-         dziennik: [
-           {data: "02.03.2021 13.28", typ: "Zlecenie", wpis: "Dodano zlecenie."},
-           {data: "05.03.2021 17.28", typ: "PPB", wpis: "Przekazano plac budowy - Tomasz Freza"}
-          ],
-         notatki: []
-      },
-      {
-         id: 1,
-         name: "Tczew Ogrodowa",
-         termin: "14.05.2021",
-         projekt: { needed: true, set: "" },
-         ppb: { needed: true, set: "" },
-         dz: { needed: true, set: "" },
-         numeracja: { needed: true, set: "" },
-         wypis: { needed: true, set: "" },
-         zajecie: { needed: true, set: "" },
-         etapowka: { needed: true, set: "" },
-         powyk: { needed: true, set: "" },
-         faktura: { needed: true, set: "" },
-         extra: "",
-         dziennik: [{data: "01.01.2021 12.38", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
-         notatki: []
-      },
-    ],
+    currOrders: testContent,
   },
   getters: {
     getCurrOrders: state => state.currOrders,

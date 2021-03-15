@@ -1,6 +1,6 @@
 <template>
   <section>
-      Planowanie {{ test }}
+      Planowanie 
   </section>
 </template>
 
