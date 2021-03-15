@@ -22,7 +22,9 @@
                 <td>Faktura</td> 
             </tr>
 
-            <tr class="order" v-for="item in currOrders" :key="item.id">
+            <p v-if="typeof currOrders === 'string'"> {{ currOrders }}</p>
+
+            <tr class="order" v-else v-for="item in currOrders" :key="item.id">
                 <td>{{ getCurrOrders.indexOf(item)+1 }}.</td>
                 <td @dblclick="openCloseDetails(item.id)">{{ item.name }} </td>
                 <td>{{ item.termin }}</td>
@@ -196,5 +198,13 @@ export default {
     }   
     #updatePanel {
         z-index: 1;
+    }
+
+    table > p {
+        font-size: 30px;
+        position: absolute;
+        left: 38%;
+        text-align: center;
+        padding: 50px 0;
     }
 </style>

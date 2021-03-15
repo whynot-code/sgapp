@@ -35,6 +35,7 @@ export default {
         order.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(order) : null
       })
       }
+      this.givenValue && this.result.length === 0 ? this.result = "Brak pasujących wyników!" : null
       this.setSearchedData(this.result)
     }
   }
