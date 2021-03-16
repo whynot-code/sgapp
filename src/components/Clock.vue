@@ -63,6 +63,9 @@ export default {
                     seconds: new Date().getSeconds(),
                     minutes: new Date().getMinutes(),
                     hours: new Date().getHours(),
+                    daysInMonth(month, year) {
+                        return new Date(year, month, 0).getDate();
+                    }
                };
                return this.mutateCurrTime(this.currTime)
            }, 1000)

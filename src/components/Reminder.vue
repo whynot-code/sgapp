@@ -17,6 +17,7 @@
                     <td>Cośtak</td><td>Termin</td><td>3 dni</td>
                 </tr>
           </table>
+          {{ currTime.daysInMonth(currTime.month, currTime.year) }}
       </article>
 </template>
 
@@ -34,22 +35,34 @@ export default {
         ...mapGetters(["currTime", "getCurrOrders"])
     },
     methods: {
-        // checkTerm(){
-        //     setTimeout(() => {
-        //         // let closestTerms = [];
-        //     const {monthDay, month, year} = this.currTime
-        //     console.log(month, monthDay, year)
-        //     // this.getCurrOrders.forEach((order) => {
-        //         // const termArray = order.termin.split(".")
-        //         //  const howManyYears = () => { return Number(termArray[2]) <= year ? 0 : Number(termArray[2]) - year }
-        //         //  const howManyMonths = () => { return Number(termArray[1]) <= month ? 0 : Number(termArray[1]) - month } 
-        //         //  const howManyDays = () => { return Number(termArray[0]) <= monthDay ? 0 : Number(termArray[0]) - monthDay }
-        //     // })
-        //     // }, 1000)
-        // }
+        checkTerm(){
+            setTimeout(() => {
+             //   let clostestTerms = [];
+            const {daysInMonth, year} = this.currTime
+          
+            this.getCurrOrders.forEach((order) => {
+                let days = 0;
+                const termArray = order.termin.split(".")
+                 const howManyYears = () => {
+                     
+                     const yearsDiffrence = Number(termArray[2]) - year
+                       if(yearsDiffrence){
+                           yearsDiffrence > 1 ? days =+ (yearsDiffrence-1 * 365) : null     //Dodatkowe lata
+                           for(let i = 1; i < Number(termArray[1]); i++){    // Kolejny rok
+                               days =+ daysInMonth(i, Number(termArray[2]))
+                           }
+                       } 
+                       }
+            howManyYears()
+            console.log(`days${days}`)
+
+            })
+            // console.log(clostestTerms)
+            }, 1000)
+        }
     },
     mounted(){
-        // this.checkTerm();
+         this.checkTerm();
     },
 }
 </script>
@@ -71,7 +84,7 @@ export default {
         width: 100%;
     }
     td{
-        border: 1px solid black;   
+        border-bottom: 1px solid black;   
         text-align: center;
     }
     tr > td:first-of-type {width: 50%;}

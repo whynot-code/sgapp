@@ -3,7 +3,7 @@ export default [
        id: 2,
        name: "Pruszcz Gałczyńskiego",
        termin: "26.02.2021",
-       projekt: { needed: true, set: "20.01.2021" },
+       projekt: { needed: true, set: "20.01.2020" },
        ppb: { needed: true, set: "" },
        dz: { needed: true, set: "" },
        numeracja: { needed: true, set: "" },
@@ -22,7 +22,7 @@ export default [
     {
        id: 30,
        name: "Pruszcz Spacerowa",
-       termin: "05.04.2021",
+       termin: "05.04.2022",
        projekt: { needed: true, set: "" },
        ppb: { needed: true, set: "" },
        dz: { needed: true, set: "" },
@@ -39,7 +39,7 @@ export default [
     {
         id: 3,
         name: "Miłowo",
-        termin: "06.04.2021",
+        termin: "06.04.2023",
         projekt: { needed: true, set: "" },
         ppb: { needed: true, set: "" },
         dz: { needed: true, set: "" },
