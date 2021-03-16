@@ -37,27 +37,51 @@ export default {
     methods: {
         checkTerm(){
             setTimeout(() => {
-             //   let clostestTerms = [];
-            const {daysInMonth, year} = this.currTime
-          
-            this.getCurrOrders.forEach((order) => {
-                let days = 0;
-                const termArray = order.termin.split(".")
-                 const howManyYears = () => {
-                     
-                     const yearsDiffrence = Number(termArray[2]) - year
-                       if(yearsDiffrence){
-                           yearsDiffrence > 1 ? days =+ (yearsDiffrence-1 * 365) : null     //Dodatkowe lata
-                           for(let i = 1; i < Number(termArray[1]); i++){    // Kolejny rok
-                               days =+ daysInMonth(i, Number(termArray[2]))
-                           }
-                       } 
-                       }
-            howManyYears()
-            console.log(`days${days}`)
+            let clostestTerms = [];
+            
+            const {month, monthDay, daysInMonth, year} = this.currTime;
 
+            this.getCurrOrders.forEach((order) => {
+                
+
+                const termArray = order.termin.split(".")
+                const yearsDiffrence = Number(termArray[2]) - year   
+
+                const moreThanYear = () => {
+                        let count = 0;
+                        yearsDiffrence > 1 ? count += ((yearsDiffrence-1) * 365) : null     //All years after first
+                         for(let i = 1; i <= Number(termArray[1]); i++){    // Months from next year
+                                count += daysInMonth(i, Number(termArray[2]))
+                        }
+                        count += Number(termArray[0])
+
+                        for(let i = month+1; i <= 12; i++){    // Months left in this year
+                        count += daysInMonth(i, year)
+                        }
+                        const currMonthDaysLeft = monthDay - daysInMonth(month, year)
+                        count += currMonthDaysLeft
+
+                        return count
+                }
+                    
+                const lessThanYear = () => {
+                    let count = 0;
+                    for(let i = month+1; i <= Number(termArray[1]); i++) {
+                        count += daysInMonth(i, year)
+                    }
+                    const currMonthDaysLeft = monthDay - daysInMonth(month, year)
+                        count += currMonthDaysLeft
+                        count += Number(termArray[0])
+                        return count
+                }
+
+                yearsDiffrence ? daysRemain = moreThanYear() : null
+                !yearsDiffrence && Number(termArray[1]) < month ? daysRemain = 0 : null
+                yearsDiffrence && Number(termArray[1]) > month ? daysRemain = lessThanYear() : null
+
+                clostestTerms.push([order.name, order.termin, daysRemian])
             })
-            // console.log(clostestTerms)
+           console.log(clostestTerms)
             }, 1000)
         }
     },
