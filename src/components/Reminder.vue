@@ -38,48 +38,72 @@ export default {
         checkTerm(){
             setTimeout(() => {
             let clostestTerms = [];
+            let daysRemain = 0;
+          //  const {month, monthDay, daysInMonth, year} = this.currTime;
+          const {daysInMonth} = this.currTime
             
-            const {month, monthDay, daysInMonth, year} = this.currTime;
-
             this.getCurrOrders.forEach((order) => {
-                
+             //   const termArray = order.termin.split(".")
+              //  const yearsDiffrence = Number(termArray[2]) - year   
+                // const moreThanYear = () => {
+                //         let count = 0;
+                //         yearsDiffrence > 1 ? count += ((yearsDiffrence-1) * 365) : null     //All years after first
+                //          for(let i = 1; i <= Number(termArray[1]); i++){    // Months from next year
+                //                 count += daysInMonth(i, Number(termArray[2]))
+                //         }
+                //         count += Number(termArray[0])
 
-                const termArray = order.termin.split(".")
-                const yearsDiffrence = Number(termArray[2]) - year   
+                //         for(let i = month+1; i <= 12; i++){    // Months left in this year
+                //         count += daysInMonth(i, year)
+                //         }
+                //         const currMonthDaysLeft = monthDay - daysInMonth(month, year)
+                //         count += currMonthDaysLeft
 
-                const moreThanYear = () => {
-                        let count = 0;
-                        yearsDiffrence > 1 ? count += ((yearsDiffrence-1) * 365) : null     //All years after first
-                         for(let i = 1; i <= Number(termArray[1]); i++){    // Months from next year
-                                count += daysInMonth(i, Number(termArray[2]))
-                        }
-                        count += Number(termArray[0])
-
-                        for(let i = month+1; i <= 12; i++){    // Months left in this year
-                        count += daysInMonth(i, year)
-                        }
-                        const currMonthDaysLeft = monthDay - daysInMonth(month, year)
-                        count += currMonthDaysLeft
-
-                        return count
-                }
+                //         return count
+                // }
                     
-                const lessThanYear = () => {
+                // const lessThanYear = () => {
+                //     let count = 0;
+                //     if(Number(termArray[1]) - month) {
+                //         for(let i = month+1; i < Number(termArray[1]); i++) {
+                //         count += daysInMonth(i, year)
+                //     }
+                //     count += Number(termArray[0])
+                //     count += daysInMonth(month, year) - monthDay
+                //     }
+                //     else {
+                //         count += Number(termArray[0]) - monthDay 
+                //     }
+                //     return count
+                // }
+
+                const overTime= () => {
                     let count = 0;
-                    for(let i = month+1; i <= Number(termArray[1]); i++) {
-                        count += daysInMonth(i, year)
+                    let d = 20
+                    let d1 = 5
+                    let m = 5
+                    let m1 = 6
+                    let r = 2021
+                    // let r1 = 2021
+                    while (d1 != d && m1 != m){
+                        if(m === 12) {
+                            r++
+                            m = 1
+                        }
+                        if(d === daysInMonth(m, r)) {
+                            m++
+                            d = 0
+                        }
+                        console.log('yhm')
+                        count++
+                        d++
                     }
-                    const currMonthDaysLeft = monthDay - daysInMonth(month, year)
-                        count += currMonthDaysLeft
-                        count += Number(termArray[0])
-                        return count
+                        console.log(count)
                 }
-
-                yearsDiffrence ? daysRemain = moreThanYear() : null
-                !yearsDiffrence && Number(termArray[1]) < month ? daysRemain = 0 : null
-                yearsDiffrence && Number(termArray[1]) > month ? daysRemain = lessThanYear() : null
-
-                clostestTerms.push([order.name, order.termin, daysRemian])
+                
+                // daysRemain = lessThanYear()
+                overTime()
+                clostestTerms.push([order.name, order.termin, daysRemain])
             })
            console.log(clostestTerms)
             }, 1000)
