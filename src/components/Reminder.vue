@@ -1,23 +1,10 @@
 <template>
    <article id="reminder">
           <table>
-                <tr>
-                    <td>Pruszcz Gałczyńskiego</td><td>15.03.2021</td><td>7 dni</td>
-                </tr>
-                <tr>
-                    <td>Tczew Ogrodowa</td><td>Termin</td><td>1 dzień</td>
-                </tr>
-                <tr>
-                    <td>Tczew Norwida</td><td>Termin</td><td>13 dni</td>
-                </tr>
-                <tr>
-                    <td>DEKPOL</td><td>Termin</td><td>4 dni</td>
-                </tr>
-                <tr>
-                    <td>Cośtak</td><td>Termin</td><td>3 dni</td>
+                <tr v-for="term in termsArray" :key="termsArray.indexOf(term)">
+                    <td>{{ term[0] }}</td><td>{{ term[1] }}</td><td>{{ term[2] }}dni</td>
                 </tr>
           </table>
-          {{ currTime.daysInMonth(currTime.month, currTime.year) }}
       </article>
 </template>
 
@@ -28,7 +15,7 @@ export default {
     name: "Reminder",
     data(){
         return{
-            
+            termsArray: []
         }
     },
     computed: {
@@ -37,81 +24,73 @@ export default {
     methods: {
         checkTerm(){
             setTimeout(() => {
-            let clostestTerms = [];
-            let daysRemain = 0;
-          //  const {month, monthDay, daysInMonth, year} = this.currTime;
-          const {daysInMonth} = this.currTime
+            let fix;  //If term day == 1, program crashed. Don't know why.
             
+            this.termsArray = [];
+
             this.getCurrOrders.forEach((order) => {
-             //   const termArray = order.termin.split(".")
-              //  const yearsDiffrence = Number(termArray[2]) - year   
-                // const moreThanYear = () => {
-                //         let count = 0;
-                //         yearsDiffrence > 1 ? count += ((yearsDiffrence-1) * 365) : null     //All years after first
-                //          for(let i = 1; i <= Number(termArray[1]); i++){    // Months from next year
-                //                 count += daysInMonth(i, Number(termArray[2]))
-                //         }
-                //         count += Number(termArray[0])
+               let count = 0;
 
-                //         for(let i = month+1; i <= 12; i++){    // Months left in this year
-                //         count += daysInMonth(i, year)
-                //         }
-                //         const currMonthDaysLeft = monthDay - daysInMonth(month, year)
-                //         count += currMonthDaysLeft
-
-                //         return count
-                // }
-                    
-                // const lessThanYear = () => {
-                //     let count = 0;
-                //     if(Number(termArray[1]) - month) {
-                //         for(let i = month+1; i < Number(termArray[1]); i++) {
-                //         count += daysInMonth(i, year)
-                //     }
-                //     count += Number(termArray[0])
-                //     count += daysInMonth(month, year) - monthDay
-                //     }
-                //     else {
-                //         count += Number(termArray[0]) - monthDay 
-                //     }
-                //     return count
-                // }
-
-                const overTime= () => {
-                    let count = 0;
-                    let d = 20
-                    let d1 = 5
-                    let m = 5
-                    let m1 = 6
-                    let r = 2021
-                    // let r1 = 2021
-                    while (d1 != d && m1 != m){
-                        if(m === 12) {
-                            r++
-                            m = 1
-                        }
-                        if(d === daysInMonth(m, r)) {
-                            m++
-                            d = 0
-                        }
-                        console.log('yhm')
-                        count++
-                        d++
-                    }
-                        console.log(count)
-                }
+                let {month, monthDay, daysInMonth, year} = this.currTime;
                 
-                // daysRemain = lessThanYear()
-                overTime()
-                clostestTerms.push([order.name, order.termin, daysRemain])
+                const termin = order.termin.split('.').map(el => Number(el))
+                let day = monthDay
+
+                if((termin[2] < year) || (termin[2] <= year && termin[1] < month) || (termin[2] <= year && termin[1] <= month && termin[0] < day)){
+                    
+                    while (day != termin[0] || month != termin[1] || year != termin[2]) {
+                    if (day === 0) {
+                        month--;
+                        day = daysInMonth(month, year);
+                    }
+                    if(month === 0){
+                        year--
+                        month = 12
+                    }
+                    day--;
+                    count--;
+                }
+
+                }
+                else{
+
+                    if(termin[0] == 1) {termin[0]++ ; fix = true} //fix Function
+
+                    while (day != termin[0] || month != termin[1] || year != termin[2]) {
+                    if (day === daysInMonth(month, year)+1) {
+                        month++;
+                        day = 1;
+                    }
+                    if(month === 13){
+                        year++
+                        month = 1
+                    }
+
+                    day++;
+                    count++;
+                }
+                }  
+
+                fix ? count-- : null //fix Function
+                
+                this.termsArray.push([order.name, order.termin, count])
+
+                this.termsArray.sort((a, b) => {
+                    return a[2] - b[2]
+                }) 
             })
-           console.log(clostestTerms)
             }, 1000)
+            console.log(this.termsArray)
         }
     },
     mounted(){
-         this.checkTerm();
+        this.checkTerm();
     },
+    watch: {
+        getCurrOrders: function(){
+            this.checkTerm();
+        }      
+    }
 }
 </script>
 
@@ -124,17 +103,21 @@ export default {
     }
     table {
         width: 100%;
-        font-size: 13px;
+        font-size: 12px;
         border-spacing: 0;
+        display: flex;
+        flex-direction: column-reverse;
     }
     tr {
-        padding: 1px;
         width: 100%;
+        position: relative;
     }
     td{
         border-bottom: 1px solid black;   
         text-align: center;
+        height: 20px;
     }
-    tr > td:first-of-type {width: 50%;}
-    tr > td:nth-of-type(2) {width: 35%;}
+    tr > td:nth-of-type(1) {width: 60%;}
+    tr > td:nth-of-type(3) {width: 20%;}
+ 
 </style>
