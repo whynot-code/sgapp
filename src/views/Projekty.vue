@@ -1,7 +1,7 @@
 <template>
-    <section>
+    <section :class="{overflow: newOrderModalOn}">
         <NewOrderModal :newOrderModalOn="newOrderModalOn" @closeModal="openCloseNewOrder" />
-        <ProjectDetails :viewDetailsModalOn="viewDetailsModalOn" @closeModal="openCloseDetails()" />
+        <ProjectDetails />
         <header>
             <button @click="openCloseNewOrder()">Nowy Projekt</button>
         </header>
@@ -117,14 +117,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["mutateCurrDetails", "mutateQuickUpdatedData"]),
+        ...mapActions(["mutateCurrDetails", "mutateQuickUpdatedData", "setOpenDetails"]),
         openCloseNewOrder(){
             this.newOrderModalOn = !this.newOrderModalOn
         },
         openCloseDetails(order){
             this.mutateCurrDetails(order)
-            this.viewDetailsModalOn = !this.viewDetailsModalOn
-            
+            this.setOpenDetails(true)
         },
         setStatus(status) {
             return status ? "+" : "-"
@@ -210,5 +209,8 @@ export default {
         left: 38%;
         text-align: center;
         padding: 50px 0;
+    }
+    .overflow {
+        overflow: hidden;
     }
 </style>

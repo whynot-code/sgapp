@@ -1,12 +1,17 @@
 <template>
   <main class="main">
+      <Calendar />
       <router-view></router-view>
   </main>
 </template>
 
 <script>
+import Calendar from "@/components/Calendar.vue"
 export default {
     name: "Main",
+    components: {
+        Calendar,
+    }
 
 }
 </script>

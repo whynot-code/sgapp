@@ -16,38 +16,15 @@ export default {
     data() {
         return {
             currTime: "",
-            days: [
-                "Niedziela",
-                "Poniedziałek",
-                "Wtorek",
-                "Środa",
-                "Czwartek",
-                "Piątek",
-                "Sobota"
-            ],
-            months: [
-                "Styczeń",
-                "Luty",
-                "Marzec",
-                "Kwiecień",
-                "Maj",
-                "Czerwiec",
-                "Lipiec",
-                "Sierpień",
-                "Wrzesień",
-                "Październik",
-                "Listopad",
-                "Grudzień"
-            ]
     }
 },
     
     computed: {
         dayName(){
-            return this.days[this.currTime.weekDay]
+            return this.currTime.weekDay == 0 ? this.currTime.days[6] : this.currTime.days[this.currTime.weekDay-1]
         },
         monthName(){
-            return this.months[this.currTime.month-1]
+            return this.currTime.month == 1 ? this.currTime.months[7] :this.currTime.months[this.currTime.month]
         },
         
     },
@@ -57,7 +34,7 @@ export default {
            setInterval(() => {
                this.currTime = {
                     year: new Date().getFullYear(),
-                    month: new Date().getMonth() + 1,
+                    month: new Date().getMonth(),
                     monthDay: new Date().getDate(),
                     weekDay: new Date().getDay(),
                     seconds: new Date().getSeconds(),
@@ -65,7 +42,30 @@ export default {
                     hours: new Date().getHours(),
                     daysInMonth(month, year) {
                         return new Date(year, month, 0).getDate();
-                    }
+                    },
+                    days: [
+                        "Poniedziałek",
+                        "Wtorek",
+                        "Środa",
+                        "Czwartek",
+                        "Piątek",
+                        "Sobota",
+                        "Niedziela"
+                    ],
+                     months: [
+                        "Styczeń",
+                        "Luty",
+                        "Marzec",
+                        "Kwiecień",
+                        "Maj",
+                        "Czerwiec",
+                        "Lipiec",
+                        "Sierpień",
+                        "Wrzesień",
+                        "Październik",
+                        "Listopad",
+                        "Grudzień"
+                    ]
                };
                return this.mutateCurrTime(this.currTime)
            }, 1000)

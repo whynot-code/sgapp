@@ -1,5 +1,5 @@
 <template>
-    <div v-if="currDetails" :class="{hidden: !viewDetailsModalOn}" class="details">
+    <div v-if="openDetails" :class="{hidden: !currDetails}" class="details">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
         <h1>{{ order.name }}</h1>
         <aside>
@@ -48,11 +48,9 @@
                 <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
                     Dodatkowe Informacje:
-                    <img class="edit" @click="extra=false" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
-                    <img v-if="!extra" class="accept" @click="editExtra('Faktura', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
-                    <img v-if="!extra" class="decline" @click="extra=true" src="@/assets/icons/erase.svg" alt="Decline-Icon"/>
+                    <img class="accept" v-if="extra" @click="editExtra('Faktura', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
                     <p>
-                        <textarea :disabled="extra" v-model="order.extra"></textarea>
+                        <textarea @keyup="extra = true" v-model="order.extra"></textarea>
                     </p>
                 </li>
             </ul>
@@ -81,17 +79,18 @@ export default {
             paramEdtior: "",
             neededFlag: "",
             checked: false,
-            extra: true,
+            extra: false,
+        
         }
     },
     props: {
         viewDetailsModalOn: Boolean,
     },
     methods: {
-        ...mapActions(["mutateParamEditor", "mutateCurrDetails", "updateCurrOrder"]),
+        ...mapActions(["mutateParamEditor", "mutateCurrDetails", "updateCurrOrder", "setOpenDetails"]),
         closeModal() {
-            this.$emit("closeModal", this.viewDetailsModalOn)
             this.mutateCurrDetails("")
+            this.setOpenDetails(false)
         },
         setStatus(status) {
             if(status.set) {
@@ -140,11 +139,11 @@ export default {
         },
         editExtra(...param){
             this.updateCurrOrder(param)
-            this.extra = true
+            this.extra = false
         }
     },
     computed: {
-        ...mapGetters(['currDetails', 'getCurrOrders', 'currTime']),
+        ...mapGetters(['currDetails', 'getCurrOrders', 'currTime', "openDetails"]),
         order(){ 
             let currOrder = 0;
             this.getCurrOrders.forEach(order => {
@@ -152,7 +151,7 @@ export default {
             })
             return currOrder
         },
-    }
+    },
 }
 </script>
 
@@ -244,7 +243,11 @@ export default {
         right: 0;
         cursor: pointer;
     }
-    .accept { right: 30px}
+    .accept { 
+        right: 5%; 
+        top: 70%;
+        z-index: 1;
+    }
     li > p {
         width: 100%;
         height: 120px;

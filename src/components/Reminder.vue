@@ -1,15 +1,31 @@
 <template>
    <article id="reminder">
           <table>
-                <tr v-for="term in termsArray" :key="termsArray.indexOf(term)">
-                    <td>{{ term[0] }}</td><td>{{ term[1] }}</td><td>{{ term[2] }}dni</td>
+                <tr  @dblclick="openCloseDetails(term[3])" v-for="term in termsToDisplay" :key="termsToDisplay.indexOf(term)">
+                    <td>
+                        {{ term[0] }}
+                    </td>
+                    <td>
+                        {{ term[1] }}
+                    </td>
+                    <td :class="{ green: term[2] >= 8, yellow: term[2] < 8 && term[2] > 0, red: term[2] === 0}">
+                        {{ 
+                            term[2] == 1 ? `Jutro` : null
+                        }}
+                        {{
+                            term[2] == 0 ? `Dzisiaj` : null
+                        }}
+                        {{
+                            term[2] > 1 ? `${term[2]} dni`: null
+                        }}
+                    </td>
                 </tr>
           </table>
       </article>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: "Reminder",
@@ -19,10 +35,23 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["currTime", "getCurrOrders"])
+        ...mapGetters(["currTime", "getCurrOrders"]),
+        termsToDisplay() {
+            let arr = new Array;
+            if(this.termsArray){
+                this.termsArray.forEach((el) => { if(el[2] >= 0) {arr.push(el)} })
+                arr
+            }
+            return arr
+        }
     },
     methods: {
-        checkTerm(){
+        ...mapActions(["mutateCurrDetails", "setOpenDetails"]),
+        openCloseDetails(order){
+            this.mutateCurrDetails(order)
+            this.setOpenDetails(true)
+        },
+        async checkTerm(){
             setTimeout(() => {
             let fix;  //If term day == 1, program crashed. Don't know why.
             
@@ -73,7 +102,7 @@ export default {
 
                 fix ? count-- : null //fix Function
                 
-                this.termsArray.push([order.name, order.termin, count])
+                this.termsArray.push([order.name, order.termin, count, order.id])
 
                 this.termsArray.sort((a, b) => {
                     return a[2] - b[2]
@@ -100,24 +129,38 @@ export default {
         height: 300px;
         background: white;
         margin-top: 30px;
+        overflow: hidden;
     }
     table {
         width: 100%;
+        height: 300px;
         font-size: 12px;
         border-spacing: 0;
         display: flex;
         flex-direction: column-reverse;
+        border-collapse: collapse;
+        user-select: none;
     }
     tr {
-        width: 100%;
+        display: flex;
         position: relative;
+        justify-content: center;
+        cursor: pointer;
+    }
+    tr:hover {
+        background: whitesmoke;
     }
     td{
         border-bottom: 1px solid black;   
         text-align: center;
-        height: 20px;
+        padding: 2px;
     }
     tr > td:nth-of-type(1) {width: 60%;}
+    tr > td:nth-of-type(2) {width: 20%;}
     tr > td:nth-of-type(3) {width: 20%;}
+
+    .green {color: rgb(0, 204, 0)}
+    .yellow {color: rgb(184, 184, 2)}
+    .red {color: red}
  
 </style>

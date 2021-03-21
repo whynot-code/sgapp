@@ -9,6 +9,7 @@ export default new Vuex.Store({
     currTime: "",
     currClick: "",
     currDetails: 0, //index of current details view
+    openDetails: false,
     paramEditor: "",
     quickUpdatedData: "",
     searchedData: [],
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     quickUpdatedData: state => state.quickUpdatedData,
     currClick: state => state.currClick,
     searchedData: state => state.searchedData,
+    openDetails: state => state.openDetails
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -50,6 +52,7 @@ export default new Vuex.Store({
     setQuickUpdatedData: (state, newValue) => {state.quickUpdatedData = newValue},
     setCurrClick: (state, newValue) => {state.currClick = newValue},
     setSearchedData: (state, newValue) => {state.searchedData = newValue},
+    setOpenDetails: (state, newValue) => {state.openDetails = newValue}
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -59,7 +62,8 @@ export default new Vuex.Store({
     mutateParamEditor({ commit }, newValue) { commit('setParamEditor', newValue)},
     mutateQuickUpdatedData({ commit }, newValue) { commit('setQuickUpdatedData', newValue)},
     mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)},
-    setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)}
+    setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)},
+    setOpenDetails({ commit }, newValue) { commit('setOpenDetails', newValue)}
   },
   modules: {
   }

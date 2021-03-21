@@ -3,6 +3,9 @@
     <div>
       <input v-model="givenValue" @keyup="searchIt" type="search" name="search" id="search">
     </div>
+    <button>
+      <img src="../assets/icons/calendar.svg" alt="Calendar-button">
+    </button>
     <Clock />
     <h1>SG Sakowicz Tarakan</h1>
   </header>
@@ -72,5 +75,22 @@ export default {
     width: 30%;
   }
   
+  button {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: rgb(105, 105, 105);
+  }
+  button:focus {outline:none;}
+  button:active {background: rgb(73, 73, 73);;}
+  button img {
+    width: 30px;
+    height: 30px;
+  }
   
 </style>
