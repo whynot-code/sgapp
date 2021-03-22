@@ -3,9 +3,9 @@
         <header>
             <h1>Kalendarz</h1>
             <nav>
-                <button @click="changeMonth(month--)">⬅</button>
+                <button @click="changeMonth('prev')">⬅</button>
                 <h2>{{ currTime.months[month] }} {{ year }}</h2>
-                <button @click="changeMonth(month++)">➡</button>
+                <button @click="changeMonth('next')">➡</button>
             </nav>
         </header>
         <table>
@@ -13,7 +13,7 @@
                 <th v-for="day in currTime.days" :key="currTime.days.indexOf(day)">{{ day }}</th>
             </tr>
             <tr>
-                <td v-for="cell in monthCells" :key="cell[0]">{{ cell[1] }}</td>
+                <td :class="{ activeCell: cell[1] }" v-for="cell in monthCells" :key="cell[0]">{{ cell[1] }}</td>
             </tr>
         </table>
     </section>
@@ -33,7 +33,18 @@ export default {
     methods: {
         changeMonth(dir) {
             if(dir == "next"){
-                this.currMonth.month++
+                this.month++;
+                if(this.month == 12) {
+                    this.year++;
+                    this.month = 0;
+                }
+            }
+            else {
+                this.month--;
+                if(this.month == -1){
+                    this.year--;
+                    this.month = 11;
+                }
             }
         }
     },
@@ -82,8 +93,10 @@ export default {
         justify-content: space-evenly;
         align-items: center;
         margin-top: 15px;
+        position: relative;
     }
     button {
+        position: absolute;
         width: 30px;
         height: 30px;
         border: 1px solid black;
@@ -91,6 +104,8 @@ export default {
         border-radius: 10px;
         cursor: pointer;
     }
+    button:first-of-type { left: 0;}
+    button:nth-of-type(2) {right: 0;}
     table {
         width: 95%;
         table-layout: fixed;
@@ -113,10 +128,11 @@ export default {
         font-size: 14px;
         font-weight: 400;
         background: rgba(31, 154, 255, 0.26);
+        margin-bottom: 5px;
     }
     td {
         width: 13.5%;
-        height: 90px;
+        height: 9vh;
         background: rgba(134, 134, 134, 0.205);
     }
     h1 {
@@ -127,8 +143,11 @@ export default {
     h2 {
         font-size: 35px;
     }
-    h3 {
-        font-size: 30px;
+    .activeCell {
+        background: rgba(255, 166, 0, 0.479);
+        cursor: pointer;
     }
-
+    .activeCell:hover {
+        background: rgba(255, 166, 0, 0.753);
+    }
 </style>
