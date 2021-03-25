@@ -1,5 +1,6 @@
 <template>
     <section class="calendar">
+
         <header>
             <h1>Kalendarz</h1>
             <nav>
@@ -150,4 +151,5 @@ export default {
     .activeCell:hover {
         background: rgba(255, 166, 0, 0.753);
     }
+
 </style>

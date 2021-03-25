@@ -14,6 +14,7 @@ export default new Vuex.Store({
     quickUpdatedData: "",
     searchedData: [],
     currOrders: testContent,
+    calendar: false,
   },
   getters: {
     getCurrOrders: state => state.currOrders,
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     quickUpdatedData: state => state.quickUpdatedData,
     currClick: state => state.currClick,
     searchedData: state => state.searchedData,
-    openDetails: state => state.openDetails
+    openDetails: state => state.openDetails,
+    calendar: state => state.calendar
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -52,7 +54,8 @@ export default new Vuex.Store({
     setQuickUpdatedData: (state, newValue) => {state.quickUpdatedData = newValue},
     setCurrClick: (state, newValue) => {state.currClick = newValue},
     setSearchedData: (state, newValue) => {state.searchedData = newValue},
-    setOpenDetails: (state, newValue) => {state.openDetails = newValue}
+    setOpenDetails: (state, newValue) => {state.openDetails = newValue},
+    openCalendar: (state, newValue) => {state.calendar = newValue},
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -63,7 +66,8 @@ export default new Vuex.Store({
     mutateQuickUpdatedData({ commit }, newValue) { commit('setQuickUpdatedData', newValue)},
     mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)},
     setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)},
-    setOpenDetails({ commit }, newValue) { commit('setOpenDetails', newValue)}
+    setOpenDetails({ commit }, newValue) { commit('setOpenDetails', newValue)},
+    openCalendar({ commit }, newValue) { commit('openCalendar', newValue)}
   },
   modules: {
   }

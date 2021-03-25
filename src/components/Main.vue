@@ -1,16 +1,20 @@
 <template>
   <main class="main">
-      <Calendar />
+      <Calendar v-if="calendar" />
       <router-view></router-view>
   </main>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Calendar from "@/components/Calendar.vue"
 export default {
     name: "Main",
     components: {
         Calendar,
+    },
+    computed: {
+        ...mapGetters(["calendar"])
     }
 
 }

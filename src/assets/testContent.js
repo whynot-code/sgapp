@@ -17,6 +17,9 @@ export default [
          {data: "02.03.2021 13.28", typ: "Zlecenie", wpis: "Dodano zlecenie."},
          {data: "05.03.2021 17.28", typ: "PPB", wpis: "Przekazano plac budowy - Tomasz Freza"}
         ],
+       plan: [
+          {data: "", kto: "", zadanie: ""}
+       ],
        notatki: []
     },
     {

@@ -3,7 +3,7 @@
     <div>
       <input v-model="givenValue" @keyup="searchIt" type="search" name="search" id="search">
     </div>
-    <button>
+    <button @click="openCalendar(!calendar)">
       <img src="../assets/icons/calendar.svg" alt="Calendar-button">
     </button>
     <Clock />
@@ -27,10 +27,10 @@ export default {
       }
     },
   computed: {
-    ...mapGetters(["getCurrOrders"]),
+    ...mapGetters(["getCurrOrders", "calendar"]),
   },
   methods: {
-    ...mapActions(["setSearchedData"]),
+    ...mapActions(["setSearchedData", "openCalendar"]),
     searchIt(){
       this.result = []
       if(this.givenValue){

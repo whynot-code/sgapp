@@ -48,7 +48,7 @@
                 <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>
                     Dodatkowe Informacje:
-                    <img class="accept" v-if="extra" @click="editExtra('Faktura', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
+                    <img class="accept" v-if="extra" @click="editExtra('Extra', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
                     <p>
                         <textarea @keyup="extra = true" v-model="order.extra"></textarea>
                     </p>
