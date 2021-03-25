@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 import Projekty from "@/views/Projekty.vue"
 import Planowanie from "@/views/Planowanie.vue"
+import Kontakty from "@/views/Kontakty.vue"
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     path: '/Planowanie',
     component: Planowanie,
     name: "Planowanie",
+  },
+  {
+    path: '/Kontakty',
+    component: Kontakty,
+    name: "Kontakty", 
   }
 ]
 

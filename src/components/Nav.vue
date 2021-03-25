@@ -4,7 +4,7 @@
           <ul>
               <router-link to="/"><li>Projekty</li></router-link>
               <router-link to="/Planowanie"><li>Planowanie</li></router-link>
-              <li>Kontakty</li>
+              <router-link to="/Kontakty"><li>Kontakty</li></router-link>
               <li>Mapa</li>
               <li>Pracownicy</li>
               <li>Notatki</li>
