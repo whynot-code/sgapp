@@ -2,7 +2,7 @@
     <div class="clock">
         <div>
             <h2>{{ fixDisplay(this.currTime.hours) }}:{{ fixDisplay(this.currTime.minutes) }}:{{ fixDisplay(this.currTime.seconds)}}</h2>
-            <h3>{{ fixDisplay(this.currTime.monthDay) }}-{{ fixDisplay(this.currTime.month) }}-{{ currTime.year }}</h3>
+            <h3>{{ fixDisplay(this.currTime.monthDay) }}-{{ fixDisplay(this.currTime.month+1) }}-{{ currTime.year }}</h3>
         </div>
         <h1>{{ dayName }}</h1>
     </div>
