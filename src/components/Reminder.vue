@@ -19,6 +19,7 @@
                             term[2] > 1 ? `${term[2]} dni`: null
                         }}
                     </td>
+
                 </tr>
           </table>
       </article>
@@ -62,6 +63,8 @@ export default {
 
                 let {month, monthDay, daysInMonth, year} = this.currTime;
                 
+                month = month+1
+                
                 const termin = order.termin.split('.').map(el => Number(el))
                 let day = monthDay
 
@@ -103,13 +106,12 @@ export default {
                 fix ? count-- : null //fix Function
                 
                 this.termsArray.push([order.name, order.termin, count, order.id])
-
+                console.log(`${order.name}: ${count}`)
                 this.termsArray.sort((a, b) => {
-                    return a[2] - b[2]
+                    return Number(a[2]) - Number(b[2])
                 }) 
             })
             }, 1000)
-            console.log(this.termsArray)
         }
     },
     mounted(){

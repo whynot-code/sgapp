@@ -1,5 +1,6 @@
 <template>
    <section>
+       <NewContactModal />
             <header>
                 <button>Nowy Wpis</button>
             </header>
@@ -15,7 +16,7 @@
 
             <p v-if="typeof currOrders === 'string'"> {{ currOrders }}</p>
 
-            <tr v-for="con in contacts" :key="contacts.indexOf(con)">
+            <tr class='contact' v-for="con in contacts" :key="contacts.indexOf(con)">
                 <td>{{ contacts.indexOf(con)+1 }}.</td>
                 <td>{{ con.name }}</td>
                 <td>{{ con.company}}  </td>
@@ -29,9 +30,14 @@
 
 <script>
 import TestContacts from "@/assets/testContacts.js"
+import NewContactModal from "@/components/NewContactModal.vue"
 import { mapGetters } from 'vuex'
+
 export default {
     name: "Kontakty",
+    components: {
+        NewContactModal,
+    },
     computed: {
         ...mapGetters(['getCurrOrders', 'searchedData']),
         contacts() {
@@ -46,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-       section {
+    section {
         height: 92vh;
         overflow-y: scroll;
         position: relative;
@@ -97,7 +103,7 @@ export default {
         background: cornsilk;
     }
     
-    .order:hover {
+    .contact:hover {
         background: rgb(199, 199, 199);
         cursor: pointer;
     }   
