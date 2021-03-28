@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import testContent from '@/assets/testContent.js'
+import TestContacts from "@/assets/testContacts.js"
 
 Vue.use(Vuex)
 
@@ -8,13 +9,21 @@ export default new Vuex.Store({
   state: {
     currTime: "",
     currClick: "",
+
+    currOrders: testContent,
     currDetails: 0, //index of current details view
     openDetails: false,
     paramEditor: "",
     quickUpdatedData: "",
+
     searchedData: [],
-    currOrders: testContent,
+
+    openContactDetails: false,
+    currContacts: TestContacts,
+    currContactDetails: 0,
+
     calendar: false,
+    newContact: false,
   },
   getters: {
     getCurrOrders: state => state.currOrders,
@@ -25,7 +34,11 @@ export default new Vuex.Store({
     currClick: state => state.currClick,
     searchedData: state => state.searchedData,
     openDetails: state => state.openDetails,
-    calendar: state => state.calendar
+    calendar: state => state.calendar,
+    newContact: state => state.newContact,
+    currContacts: state => state.currContacts,
+    currContactDetails: state => state.currContactDetails,
+    openContactDetails: state => state.openContactDetails,
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -56,6 +69,10 @@ export default new Vuex.Store({
     setSearchedData: (state, newValue) => {state.searchedData = newValue},
     setOpenDetails: (state, newValue) => {state.openDetails = newValue},
     openCalendar: (state, newValue) => {state.calendar = newValue},
+    newContactActive: (state, newValue) => {state.newContact = newValue},
+    currContactDetails: (state, newValue) => {state.currContact = newValue},
+    openContactDetails: (state, newValue) => {state.openContactDetails = newValue},
+    addContact: (state, newValue) => {state.currContacts.unshift(newValue)},
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -67,7 +84,11 @@ export default new Vuex.Store({
     mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)},
     setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)},
     setOpenDetails({ commit }, newValue) { commit('setOpenDetails', newValue)},
-    openCalendar({ commit }, newValue) { commit('openCalendar', newValue)}
+    openCalendar({ commit }, newValue) { commit('openCalendar', newValue)},
+    newContactActive({ commit }, newValue) { commit('newContactActive', newValue)},
+    addContact({ commit }, newValue) { commit('addContact', newValue)},
+    currContactDetails({ commit }, newValue) { commit('currContactDetails', newValue)},
+    openContactDetails({ commit }, newValue) { commit('openContactDetails', newValue)},
   },
   modules: {
   }

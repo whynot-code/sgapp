@@ -2,7 +2,7 @@
    <section>
        <NewContactModal />
             <header>
-                <button>Nowy Wpis</button>
+                <button @click="newContactActive(true)">Nowy Kontakt</button>
             </header>
         <table>
             <tr>
@@ -11,6 +11,8 @@
                 <td>Firma</td>
                 <td>Miejscowość</td>
                 <td>Stanowisko</td>
+                <td>Email</td>
+                <td>Tel:</td>
                 <td>Opis</td>
             </tr>
 
@@ -18,10 +20,12 @@
 
             <tr class='contact' v-for="con in contacts" :key="contacts.indexOf(con)">
                 <td>{{ contacts.indexOf(con)+1 }}.</td>
-                <td>{{ con.name }}</td>
+                <td @dblclick="openCloseDetails(con.id)">{{ con.name }}</td>
                 <td>{{ con.company}}  </td>
                 <td>{{ con.location }}</td>
                 <td>{{ con.position }}</td>
+                <td>{{ con.email }}</td>
+                <td>{{ con.tel }}</td>
                 <td>{{ con.description}}</td>
             </tr>
         </table>
@@ -29,9 +33,8 @@
 </template>
 
 <script>
-import TestContacts from "@/assets/testContacts.js"
 import NewContactModal from "@/components/NewContactModal.vue"
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: "Kontakty",
@@ -39,14 +42,21 @@ export default {
         NewContactModal,
     },
     computed: {
-        ...mapGetters(['getCurrOrders', 'searchedData']),
+        ...mapGetters(['getCurrOrders', 'searchedData','currContacts']),
         contacts() {
-            return TestContacts ? TestContacts : null
+            return this.currContacts ? this.currContacts : null
         },
          currOrders() {
             return this.searchedData.length > 0 ? this.searchedData : this.getCurrOrders
         },
-    }
+    },
+    methods: {
+            ...mapActions(['newContactActive']),
+        },
+        openCloseDetails(order){
+            this.currContactDetails(order)
+            this.setOpenDetails(true)
+        },
 
 }
 </script>
@@ -96,7 +106,7 @@ export default {
         cursor: pionter;
         background: rgb(75, 75, 75);
     }
-    tr > td {text-align: center; word-break: break-all;}
+    tr > td {text-align: center; word-break: break;}
 
 
     tr{

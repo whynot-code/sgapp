@@ -1,6 +1,6 @@
 <template> 
-    <div class="newContact">
-        <button class="closeModal">x</button>
+    <div v-if="newContact" class="newContact">
+        <button @click="newContactActive(false)" class="closeModal">x</button>
         <h1>Nowy Kontakt:</h1>
         <form action="" name="contactForm">
             <label for="name">Nazwa:</label>
@@ -15,10 +15,16 @@
             <label for="position">Stanowisko:</label>
             <input type="text" v-model="newContactData.position" name="position" id="position">
 
+            <label for="email">E-mail:</label>
+            <input type="text" v-model="newContactData.email" name="email" id="email">
+
+            <label for="tel">Tel:</label>
+            <input type="text" v-model="newContactData.tel" name="tel" id="tel">
+
             <label for="description">Opis:</label>
             <textarea type="text" v-model="newContactData.description" name="description" id="description"></textarea>
     
-            <button class="addOrder">Dodaj</button>
+            <button @click.prevent="addNewContact()" class="addOrder">Dodaj</button>
         </form>
     </div>
 </template>
@@ -34,20 +40,23 @@ export default {
                 name: "",
                 company: "",
                 location: "",
-                pposition: "",
+                position: "",
+                email: "",
+                tel: "",
                 description: "",
             }
         }
     },
     computed: {
-        ...mapGetters([]),
+        ...mapGetters(["newContact", "currContacts"]),
         nextId() {
-            return this.getCurrContacts[0].id
+            return this.currContacts[0].id
         }
     },
     methods: {
-        ...mapActions([]),
+        ...mapActions(["newContactActive", "addContact"]),
         closeModal() {
+            this.newContactActive(false)
             this.clearForm()
         },
         clearForm() {
@@ -55,11 +64,11 @@ export default {
                 this.newContactData[key] = "";
             }
         },
-        addOrder() {
+        addNewContact() {
             let nameInput = document.querySelector("#name");
 
             if(!this.newContactData.name) {   //VALIDATE EMPTY ORDER
-                nameInput.setAttribute("placeholder", "Bez nazwy nie polecimy! :(") ;
+                nameInput.setAttribute("placeholder", "Brak nazwy! :(") ;
                 nameInput.style.border = '1px solid red';
             } 
                 else{
@@ -67,17 +76,19 @@ export default {
 
                
 
-                let newOrder = {
+                let newContact = {
                     id: this.nextId+1,
                     name: this.newContactData.name,
                     company: this.newContactData.company,
                     location: this.newContactData.location,
                     position: this.newContactData.position,
+                    email: this.newContactData.email,
+                    tel: this.newContactData.tel,
                     description: this.newContactData.description
                 }
 
-                this.mutateCurrOrders(newOrder);
-                newOrder = "";
+                this.addContact(newContact);
+                newContact = "";
                 this.closeModal()
             }   
         },
