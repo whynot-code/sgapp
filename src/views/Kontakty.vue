@@ -1,6 +1,7 @@
 <template>
    <section>
        <NewContactModal />
+       <ContactDetails />
             <header>
                 <button @click="newContactActive(true)">Nowy Kontakt</button>
             </header>
@@ -34,12 +35,14 @@
 
 <script>
 import NewContactModal from "@/components/NewContactModal.vue"
+import ContactDetails from "@/components/ContactDetails.vue"
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: "Kontakty",
     components: {
         NewContactModal,
+        ContactDetails
     },
     computed: {
         ...mapGetters(['getCurrOrders', 'searchedData','currContacts']),
@@ -51,11 +54,11 @@ export default {
         },
     },
     methods: {
-            ...mapActions(['newContactActive']),
+        ...mapActions(['newContactActive', "contactDetailsActive", "setContactId"]),
+        openCloseDetails(id){
+            this.setContactId(id)
+            this.contactDetailsActive(true)
         },
-        openCloseDetails(order){
-            this.currContactDetails(order)
-            this.setOpenDetails(true)
         },
 
 }

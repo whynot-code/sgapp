@@ -21,7 +21,10 @@ export default {
     
     computed: {
         dayName(){
-            return this.currTime.weekDay == 0 ? this.currTime.days[6] : this.currTime.days[this.currTime.weekDay-1]
+            if(this.currTime){
+                return this.currTime.weekDay == 0 ? this.currTime.days[6] : this.currTime.days[this.currTime.weekDay-1]
+            } else
+            return null
         },
         monthName(){
             return this.currTime.month == 1 ? this.currTime.months[7] :this.currTime.months[this.currTime.month]

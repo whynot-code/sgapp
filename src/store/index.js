@@ -20,7 +20,7 @@ export default new Vuex.Store({
 
     openContactDetails: false,
     currContacts: TestContacts,
-    currContactDetails: 0,
+    currContactId: 0,
 
     calendar: false,
     newContact: false,
@@ -37,7 +37,7 @@ export default new Vuex.Store({
     calendar: state => state.calendar,
     newContact: state => state.newContact,
     currContacts: state => state.currContacts,
-    currContactDetails: state => state.currContactDetails,
+    currContactId: state => state.currContactId,
     openContactDetails: state => state.openContactDetails,
   },
   mutations: {
@@ -70,8 +70,8 @@ export default new Vuex.Store({
     setOpenDetails: (state, newValue) => {state.openDetails = newValue},
     openCalendar: (state, newValue) => {state.calendar = newValue},
     newContactActive: (state, newValue) => {state.newContact = newValue},
-    currContactDetails: (state, newValue) => {state.currContact = newValue},
-    openContactDetails: (state, newValue) => {state.openContactDetails = newValue},
+    setContactId: (state, newValue) => {state.currContactId = newValue},
+    contactDetailsActive: (state, newValue) => {state.openContactDetails = newValue},
     addContact: (state, newValue) => {state.currContacts.unshift(newValue)},
   },
   actions: {
@@ -87,8 +87,8 @@ export default new Vuex.Store({
     openCalendar({ commit }, newValue) { commit('openCalendar', newValue)},
     newContactActive({ commit }, newValue) { commit('newContactActive', newValue)},
     addContact({ commit }, newValue) { commit('addContact', newValue)},
-    currContactDetails({ commit }, newValue) { commit('currContactDetails', newValue)},
-    openContactDetails({ commit }, newValue) { commit('openContactDetails', newValue)},
+    setContactId({ commit }, newValue) { commit('setContactId', newValue)},
+    contactDetailsActive({ commit }, newValue) { commit('contactDetailsActive', newValue)},
   },
   modules: {
   }

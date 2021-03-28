@@ -106,7 +106,7 @@ export default {
                 fix ? count-- : null //fix Function
                 
                 this.termsArray.push([order.name, order.termin, count, order.id])
-                console.log(`${order.name}: ${count}`)
+           
                 this.termsArray.sort((a, b) => {
                     return Number(a[2]) - Number(b[2])
                 }) 
@@ -127,7 +127,7 @@ export default {
 
 <style scoped>
     #reminder {
-        width: 80%;
+        width: 90%;
         height: 300px;
         background: white;
         margin-top: 30px;
@@ -157,8 +157,8 @@ export default {
         text-align: center;
         padding: 2px;
     }
-    tr > td:nth-of-type(1) {width: 60%;}
-    tr > td:nth-of-type(2) {width: 20%;}
+    tr > td:nth-of-type(1) {width: 50%;}
+    tr > td:nth-of-type(2) {width: 30%;}
     tr > td:nth-of-type(3) {width: 20%;}
 
     .green {color: rgb(0, 204, 0)}

@@ -1,22 +1,20 @@
 <template>
     <div v-if="openContactDetails" class="details">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
-        <h1>{{ order.name }}</h1>
+        <h1>{{ contact.name }}</h1>
         
         <article>
             <h3>Informacje</h3>
             <ul id="info">
                 <DetailsEditor />
-
-                <li>Nazwa: {{ order.termin }}<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Firma: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Miejscowość: {{ setStatus(order.ppb) }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Stanowisko: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>E-mail: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Tel: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Opis: {{ setStatus(order.dz) }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Nazwa: {{ contact.name }}<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Firma: {{ contact.company }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Miejscowość: {{ contact.location }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Stanowisko: {{ contact.position }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>E-mail: {{ contact.email }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Tel: {{ contact.tel }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Opis: {{ contact.description }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
             </ul>
-           
         </article>
     </div>
 </template>
@@ -26,51 +24,33 @@ import { mapGetters, mapActions } from 'vuex'
 import DetailsEditor from "@/components/DetailsEditor.vue"
 
 export default {
-    name: "ProjectDetails",
+    name: "ContactDetails",
     components: {
         DetailsEditor,
     },
     data() {
         return{
-            newEntry: {data: "", typ: "", wpis: ""},
             paramEdtior: "",
-            neededFlag: "",
-            checked: false,
-            extra: false,
-        
         }
     },
-    props: {
-        viewDetailsModalOn: Boolean,
-    },
     methods: {
-        ...mapActions(["mutateParamEditor", "mutateCurrDetails", "updateCurrOrder", "setOpenDetails"]),
+        ...mapActions(["contactDetailsActive", "setContactId"]),
         closeModal() {
-            this.mutateCurrDetails("")
-            this.setOpenDetails(false)
+            this.setContactId("")
+            this.contactDetailsActive(false)
         },
-        setStatus(status) {
-            if(status.set) {
-                return typeof status.set === 'boolean' ? `✅` : `${status.set}  ✅`
-            } else if(status.needed) {
-                return `wymaga ❕`
-            } else {
-                return `Nie wymaga`
-            }
-        },
-       
         openParamEditor(...param){
            this.mutateParamEditor(param)
         },
     },
     computed: {
-        ...mapGetters(['currDetails', 'getCurrOrders', 'currTime', "openDetails"]),
-        order(){ 
-            let currOrder = 0;
-            this.getCurrOrders.forEach(order => {
-                order.id === this.currDetails ? currOrder = order : null
+        ...mapGetters(["currContacts", "currContactId", "openContactDetails"]),
+        contact(){ 
+            let currContact = 0;
+            this.currContacts.forEach(contact => {
+                contact.id === this.currContactId ? currContact = contact : null
             })
-            return currOrder
+            return currContact
         },
     },
 }
