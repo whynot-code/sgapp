@@ -187,7 +187,7 @@ export default {
         cursor: pionter;
         background: rgb(75, 75, 75);
     }
-    tr > td {text-align: center; word-break: break-all;}
+    tr > td {text-align: center; word-break: break;}
     tr > td:first-of-type {width: 60px; text-align: left; min-width: 0;}
     tr > td:nth-of-type(2) {width: 30%;}
 

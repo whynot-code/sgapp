@@ -13,7 +13,7 @@
                 <li>Stanowisko: {{ contact.position }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>E-mail: {{ contact.email }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
                 <li>Tel: {{ contact.tel }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Opis: {{ contact.description }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Opis: <img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/><br /><br /> {{ contact.description }}</li>
             </ul>
         </article>
     </div>
@@ -64,6 +64,7 @@ export default {
         background: rgba(255, 250, 205, 0.925);
         
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         padding: 25px;
         z-index: 2;
@@ -77,14 +78,15 @@ export default {
         left: 92%;
         position: absolute
     }
-    .hidden {
-        display: none;
-    }
+  
     h1 {
         width: 100%;
         text-align: center;
         font-size: 37px;
         margin-bottom: 20px;
+    }
+    h3 {
+        font-size: 25px;
     }
     aside {
         width: 45%;
@@ -119,6 +121,10 @@ export default {
         width: 51.5%;
         padding: 0 25px 25px 25px;
         height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10vh;
     }
     ul {
         list-style-type: none;
@@ -144,83 +150,5 @@ export default {
         right: 0;
         cursor: pointer;
     }
-    .accept { 
-        right: 5%; 
-        top: 70%;
-        z-index: 1;
-    }
-    li > p {
-        width: 100%;
-        height: 120px;
-        margin-top: 10px;
-        font-size: 15px;
-        position: relative;
-        padding: 8px;
-        text-align: left;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-   p > textarea {
-       font-size: 15px;
-       padding: 8px;
-       position: absolute;
-       left: 0;
-       top: 0;
-       background: transparent;
-       width: 100%;
-       max-width: 100%;
-       height: 13vh;
-       max-height: 13vh;
-       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-       background: rgba(128, 128, 128, 0.932);
-   }
-    footer {
-        position: relative;
-        width: 100%;
-    }
-    footer > h3 {
-        font-size: 30px;
-        position: relative;
-    }
-    #note {
-        width: 100%;
-        min-height: 300px;
-        background: white;
-        padding: 15px;
-    }
-    .plus {
-        width: 30px;
-        height: 30px;
-    }
-  
 
-    form {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        padding: 5px 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    #wpis {
-       text-align: center;
-       padding: 8px;
-       width: 80%;
-    }
-    select {
-        height: 30px;
-        margin: 6px;
-    }
-    form > button {
-        height: 30px;
-        margin: 6px;
-        padding: 8px;
-    }
-    .invalid {
-        border: 1px solid red;
-        outline: 1px solid red;
-    }
-    .hidden {
-        display: none;
-    }
 </style>
