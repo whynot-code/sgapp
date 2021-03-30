@@ -1,7 +1,7 @@
 <template>
-    <div class="bg" v-if="paramContactEditor">
+    <div class="bg" v-if="eployeeEditor">
         <div id="editModal">
-        <h3>{{ paramContactEditor[0] }}</h3>
+        <h3>{{ eployeeEditor[0] }}</h3>
         <div>
             <label for="newValue">Zmień datę:</label>
             <input type="text" v-model="newValue" name="newValue" id="newValue">
@@ -17,7 +17,7 @@
 import { mapGetters, mapActions } from "vuex"
 
 export default {
-    name: "DetailsEditor",
+    name: "EmployeeEditor",
     data(){
         return{
             newValue: "",
@@ -25,9 +25,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["mutateContactEditor", "updateCurrContact"]),
+        ...mapActions(["eployeeEditorActive", "updateCurrEmployee"]),
         closeEditor() {
-            this.mutateContactEditor("");
+            this.eployeeEditorActive("");
             this.newValue = "";
         },
         editParam(){
@@ -37,18 +37,18 @@ export default {
             }
             else {
                 input.classList.remove('invalid')
-                this.updatedData = [this.paramContactEditor[0], this.newValue]
+                this.updatedData = [this.eployeeEditor[0], this.newValue]
 
-                this.updateCurrContact(this.updatedData)
+                this.updateCurrEmployee(this.updatedData)
                 this.updatedData = ""
                 this.closeEditor()
             }
         }
     },
     computed: {
-        ...mapGetters(["paramContactEditor", "currContacts", "currContactId"]),
+        ...mapGetters(["eployeeEditor", "currEmployees", "currEmployeeId"]),
         contact(){ 
-            return this.currContacts[this.currContactId]
+            return this.currEmployees[this.currEmployeeId]
         },
     },
 }

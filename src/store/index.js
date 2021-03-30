@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import testContent from '@/assets/testContent.js'
 import TestContacts from "@/assets/testContacts.js"
+import TestEmployees from '@/assets/testEmployees.js'
 
 Vue.use(Vuex)
 
@@ -21,24 +22,42 @@ export default new Vuex.Store({
     openContactDetails: false,
     currContacts: TestContacts,
     currContactId: 0,
+    newContact: false,
+    paramContactEditor: "",
 
     calendar: false,
-    newContact: false,
+
+    currEmployees: TestEmployees,
+    currEmployeeId: 0,
+    employeeDetails: false,
+    newEmployee: false,
+    eployeeEditor: "",
   },
   getters: {
     getCurrOrders: state => state.currOrders,
-    currTime: state => state.currTime,
-    currDetails: state => state.currDetails,
     paramEditor: state => state.paramEditor,
     quickUpdatedData: state => state.quickUpdatedData,
+    openDetails: state => state.openDetails,
+    currDetails: state => state.currDetails,
+
+    currTime: state => state.currTime,
     currClick: state => state.currClick,
     searchedData: state => state.searchedData,
-    openDetails: state => state.openDetails,
+
     calendar: state => state.calendar,
+
     newContact: state => state.newContact,
     currContacts: state => state.currContacts,
     currContactId: state => state.currContactId,
     openContactDetails: state => state.openContactDetails,
+    paramContactEditor: state => state.paramContactEditor,
+
+    currEmployees: state => state.currEmployees,
+    currEmployeeId: state => state.currEmployeeId,
+    employeeDetails: state => state.employeeDetails,
+    newEmployee: state => state.newEmployee,
+    eployeeEditor: state => state.eployeeEditor,
+
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -65,14 +84,49 @@ export default new Vuex.Store({
     setCurrDetails: (state, newValue) => {state.currDetails = newValue},
     setParamEditor: (state, newValue) => {state.paramEditor = newValue},
     setQuickUpdatedData: (state, newValue) => {state.quickUpdatedData = newValue},
+
     setCurrClick: (state, newValue) => {state.currClick = newValue},
     setSearchedData: (state, newValue) => {state.searchedData = newValue},
     setOpenDetails: (state, newValue) => {state.openDetails = newValue},
     openCalendar: (state, newValue) => {state.calendar = newValue},
+
     newContactActive: (state, newValue) => {state.newContact = newValue},
     setContactId: (state, newValue) => {state.currContactId = newValue},
     contactDetailsActive: (state, newValue) => {state.openContactDetails = newValue},
     addContact: (state, newValue) => {state.currContacts.unshift(newValue)},
+    setContactEditor: (state, newValue) => {state.paramContactEditor = newValue},
+    updateCurrContact: (state, updatedData) => {
+      state.currContacts.forEach(contact => {
+        if(contact.id === state.currContactId) {
+          switch(updatedData[0]){
+            case "Nazwa": contact.name = updatedData[1]; break;
+            case "Firma": contact.company = updatedData[1]; break;
+            case "Miejscowość": contact.location = updatedData[1]; break;
+            case "Stanowisko": contact.position = updatedData[1]; break;
+            case "E-mail": contact.email = updatedData[1]; break;
+            case "Tel": contact.tel = updatedData[1]; break;
+            case "Opis": contact.description = updatedData[1]; break;
+          }
+        }
+      })
+  },
+  setEmployeeId: (state, newValue) => {state.currEmployeeId = newValue},
+  employeeDetailsActive: (state, newValue) => {state.employeeDetails = newValue},
+  newEmployeeActive: (state, newValue) => {state.newEmployee = newValue},
+  eployeeEditorActive: (state, newValue) => {state.eployeeEditor = newValue},
+  addEmployee: (state, newValue) => {state.currEmployees.unshift(newValue)},
+  updateCurrEmployee: (state, updatedData) => {
+    state.currEmployees.forEach(employee => {
+      if(employee.id === state.currEmployeeId) {
+        switch(updatedData[0]){
+          case "Nazwa": employee.name = updatedData[1]; break;
+          case "E-mail": employee.email = updatedData[1]; break;
+          case "Tel": employee.tel = updatedData[1]; break;
+        }
+      }
+    })
+},
+  
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -81,14 +135,26 @@ export default new Vuex.Store({
     mutateCurrDetails({ commit }, newValue) { commit('setCurrDetails', newValue)},
     mutateParamEditor({ commit }, newValue) { commit('setParamEditor', newValue)},
     mutateQuickUpdatedData({ commit }, newValue) { commit('setQuickUpdatedData', newValue)},
+
     mutateCurrClick({ commit }, newValue) { commit('setCurrClick', newValue)},
     setSearchedData({ commit }, newValue) { commit('setSearchedData', newValue)},
     setOpenDetails({ commit }, newValue) { commit('setOpenDetails', newValue)},
     openCalendar({ commit }, newValue) { commit('openCalendar', newValue)},
+
     newContactActive({ commit }, newValue) { commit('newContactActive', newValue)},
     addContact({ commit }, newValue) { commit('addContact', newValue)},
     setContactId({ commit }, newValue) { commit('setContactId', newValue)},
     contactDetailsActive({ commit }, newValue) { commit('contactDetailsActive', newValue)},
+    mutateContactEditor({ commit }, newValue) { commit('setContactEditor', newValue)},
+    updateCurrContact({ commit }, newValue) { commit('updateCurrContact', newValue)},
+
+    setEmployeeId({ commit }, newValue) { commit('setEmployeeId', newValue)},
+    employeeDetailsActive({ commit }, newValue) { commit('employeeDetailsActive', newValue)},
+    newEmployeeActive({ commit }, newValue) { commit('newEmployeeActive', newValue)},
+    eployeeEditorActive({ commit }, newValue) { commit('eployeeEditorActive', newValue)},
+    updateCurrEmployee({ commit }, newValue) { commit('updateCurrEmployee', newValue)},
+    addEmployee({ commit }, newValue) { commit('addEmployee', newValue)},
+    
   },
   modules: {
   }

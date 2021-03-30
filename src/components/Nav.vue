@@ -6,7 +6,7 @@
               <router-link to="/Planowanie"><li>Planowanie</li></router-link>
               <router-link to="/Kontakty"><li>Kontakty</li></router-link>
               <li>Mapa</li>
-              <li>Pracownicy</li>
+              <router-link to="/Pracownicy"><li>Pracownicy</li></router-link>
               <li>Notatki</li>
               <li>Ustawienia</li>
           </ul>

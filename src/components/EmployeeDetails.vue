@@ -1,18 +1,14 @@
 <template>
-    <div v-if="openContactDetails" class="details">
+    <div v-if="employeeDetails" class="details">
         <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
-        <h1>{{ contact.name }}</h1>
-        <ContactEditor />
+        <h1>{{ employee.name }}</h1>
+        <EmployeeEditor />
         <article>
             <h3>Informacje</h3>
             <ul id="info">
-                <li>Nazwa: {{ contact.name }}<img class="edit" @click="openParamEditor('Nazwa', contact.name)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Firma: {{ contact.company }} <img class="edit" @click="openParamEditor('Firma', contact.company)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Miejscowość: {{ contact.location }}<img class="edit" @click="openParamEditor('Miejscowość', contact.location)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Stanowisko: {{ contact.position }}<img class="edit" @click="openParamEditor('Stanowisko', contact.position)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>E-mail: {{ contact.email }}<img class="edit" @click="openParamEditor('E-mail', contact.email)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Tel: {{ contact.tel }}<img class="edit" @click="openParamEditor('Tel', contact.tel)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Opis: <img class="edit" @click="openParamEditor('Opis', contact.tel)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/><br /><br /> {{ contact.description }}</li>
+                <li>Nazwa: {{ employee.name }}<img class="edit" @click="openParamEditor('Nazwa', employee.name)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>E-mail: {{ employee.email }}<img class="edit" @click="openParamEditor('E-mail', employee.email)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Tel: {{ employee.tel }}<img class="edit" @click="openParamEditor('Tel', employee.tel)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
             </ul>
         </article>
     </div>
@@ -20,12 +16,12 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import ContactEditor from "@/components/ContactEditor.vue"
+import EmployeeEditor from "@/components/EployeeEditor.vue"
 
 export default {
-    name: "ContactDetails",
+    name: "EmployeeDetails",
     components: {
-        ContactEditor,
+        EmployeeEditor,
     },
     data() {
         return{
@@ -33,23 +29,23 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["contactDetailsActive", "setContactId", "mutateContactEditor"]),
+        ...mapActions(["employeeDetailsActive", "setEmployeeId", "eployeeEditorActive"]),
         closeModal() {
-            this.setContactId("")
-            this.contactDetailsActive(false)
+            this.setEmployeeId("")
+            this.employeeDetailsActive(false)
         },
         openParamEditor(...param){
-           this.mutateContactEditor(param)
+           this.eployeeEditorActive(param)
         },
     },
     computed: {
-        ...mapGetters(["currContacts", "currContactId", "openContactDetails"]),
-        contact(){ 
-            let currContact = 0;
-            this.currContacts.forEach(contact => {
-                contact.id === this.currContactId ? currContact = contact : null
+        ...mapGetters(["currEmployees", "currEmployeeId", "employeeDetails"]),
+        employee(){ 
+            let currEmployee = 0;
+            this.currEmployees.forEach(employee => {
+                employee.id === this.currEmployeeId ? currEmployee = employee : null
             })
-            return currContact
+            return currEmployee
         },
     },
 }

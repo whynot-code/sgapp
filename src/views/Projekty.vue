@@ -1,7 +1,6 @@
 <template>
     <section :class="{overflow: newOrderModalOn}">
         <NewOrderModal :newOrderModalOn="newOrderModalOn" @closeModal="openCloseNewOrder" />
-        <ProjectDetails />
         <header>
             <button @click="openCloseNewOrder()">Nowy Projekt</button>
         </header>
@@ -98,7 +97,6 @@
 
 <script>
 import NewOrderModal from "@/components/NewOrderModal.vue"
-import ProjectDetails from "@/components/ProjectDetails.vue"
 import UpdatePanel from "@/components/QuickUpdateModal.vue"
 
 import { mapGetters, mapActions } from "vuex"
@@ -107,7 +105,6 @@ export default {
     name: "Projekty",
     components: {
         NewOrderModal,
-        ProjectDetails,
         UpdatePanel
     },
     data() {

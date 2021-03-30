@@ -1,6 +1,7 @@
 <template>
   <main class="main">
       <Calendar v-if="calendar" />
+      <ProjectDetails />
       <router-view></router-view>
   </main>
 </template>
@@ -8,10 +9,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Calendar from "@/components/Calendar.vue"
+import ProjectDetails from "@/components/ProjectDetails.vue"
 export default {
     name: "Main",
     components: {
         Calendar,
+        ProjectDetails
     },
     computed: {
         ...mapGetters(["calendar"])
@@ -26,5 +29,6 @@ export default {
         height: 92vh;
         border: 1px solid black;
         float: left;
+        position: relative;
     }
 </style>
