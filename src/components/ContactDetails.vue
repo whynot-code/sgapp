@@ -7,13 +7,13 @@
             <h3>Informacje</h3>
             <ul id="info">
                 <DetailsEditor />
-                <li>Nazwa: {{ contact.name }}<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Firma: {{ contact.company }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Miejscowość: {{ contact.location }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Stanowisko: {{ contact.position }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>E-mail: {{ contact.email }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Tel: {{ contact.tel }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Opis: <img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/><br /><br /> {{ contact.description }}</li>
+                <li>Nazwa: {{ contact.name }}<img class="edit" @click="openParamEditor('nazwa', contact.name)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Firma: {{ contact.company }} <img class="edit" @click="openParamEditor('firma', contact.company)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Miejscowość: {{ contact.location }}<img class="edit" @click="openParamEditor('miejscowosc', contact.location)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Stanowisko: {{ contact.position }}<img class="edit" @click="openParamEditor('stanowisko', contact.position)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>E-mail: {{ contact.email }}<img class="edit" @click="openParamEditor('email', contact.email)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Tel: {{ contact.tel }}<img class="edit" @click="openParamEditor('tel', contact.tel)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
+                <li>Opis: <img class="edit" @click="openParamEditor('opis', contact.tel)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/><br /><br /> {{ contact.description }}</li>
             </ul>
         </article>
     </div>
@@ -124,7 +124,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 10vh;
+        margin-top: vh;
     }
     ul {
         list-style-type: none;
