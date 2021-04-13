@@ -1,9 +1,8 @@
 <template>
    <section>
-       <NewContactModal />
-       <ContactDetails />
+       <NewPlanModal />
             <header>
-                <button @click="newContactActive(true)">Planuj</button>
+                <button @click="newPlanActive(true)">Planuj</button>
             </header>
         <table>
             <tr>
@@ -12,52 +11,67 @@
                 <td>Data</td>
                 <td>Pracownik</td>
                 <td>Opis pracy</td>
-                <td>Stanowisko</td>
-                <td>Email</td>
-                <td>Tel:</td>
             </tr>
 
             <p v-if="typeof currOrders === 'string'"> {{ currOrders }}</p>
-
-            <tr class='contact' v-for="con in contacts" :key="contacts.indexOf(con)">
-                <td>{{ contacts.indexOf(con)+1 }}.</td>
-                <td @dblclick="openCloseDetails(con.id)">{{ con.name }}</td>
-                <td>{{ con.company}}  </td>
-                <td>{{ con.location }}</td>
-                <td>{{ con.position }}</td>
-                <td>{{ con.email }}</td>
-                <td>{{ con.tel }}</td>
-                <td>{{ con.description}}</td>
+            <tr class='contact' v-for="job in allJobs" :key="allJobs.indexOf(job)">
+                <td>{{ allJobs.indexOf(job)+1 }}.</td>
+                <td>{{ job[0] }}</td>
+                <td>{{ job[1].data }}  </td>
+                <td>{{ job[1].kto }}</td>
+                <td>{{ job[1].opis }} <img @click="dataToDelete = job" src="../assets/icons/erase.svg" alt="erase-image"></td>
             </tr>
         </table>
+        <div v-if="dataToDelete" id="confirmBg">
+            <div id="confirm">
+                <h3>Usunąć wpis?</h3>
+
+                <button @click="deletePlan(dataToDelete), dataToDelete = ''">Potwierdź</button>
+                <button @click="dataToDelete = ''">Anuluj</button>
+            </div>
+        </div>
+        
     </section>
 </template>
 
 <script>
-import NewContactModal from "@/components/NewContactModal.vue"
-import ContactDetails from "@/components/ContactDetails.vue"
+import NewPlanModal from "@/components/NewPlanModal.vue"
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: "Planowanie",
+    data() {
+        return{
+            dataToDelete: "",
+        }
+    },
     components: {
-        NewContactModal,
-        ContactDetails
+        NewPlanModal,
     },
     computed: {
-        ...mapGetters(['getCurrOrders', 'searchedData','currContacts']),
+        ...mapGetters(['getCurrOrders', 'searchedData']),
         contacts() {
             return this.currContacts ? this.currContacts : null
         },
-         currOrders() {
+        currOrders() {
             return this.searchedData.length > 0 ? this.searchedData : this.getCurrOrders
         },
+        allJobs() {
+            const jobs = []
+                this.currOrders.forEach(el => {
+                    if(el.plan) {
+                        el.plan.forEach(item => {
+                            jobs.push([el.name, item])
+                        })
+                    }
+                })
+            return jobs
+        }
     },
     methods: {
-        ...mapActions(['newContactActive', "contactDetailsActive", "setContactId"]),
+        ...mapActions(['deletePlan', 'newPlanActive']),
         openCloseDetails(id){
             this.setContactId(id)
-            this.contactDetailsActive(true)
         },
         },
 
@@ -70,6 +84,7 @@ export default {
         overflow-y: scroll;
         position: relative;
         z-index: 1;
+        overflow-x: hidden;
     }
     button {
         width: 200px;
@@ -114,6 +129,15 @@ export default {
 
     tr{
         background: cornsilk;
+        position: relative;
+    }
+
+    td > img {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: 1%;
+        top: 5px;
     }
     
     .contact:hover {
@@ -133,5 +157,46 @@ export default {
     }
     .overflow {
         overflow: hidden;
+    }
+    
+    #confirm {
+        position: absolute;
+        width: 35%;
+        height: 15vh;
+        background: white;
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        border-radius: 5px;
+        border: 1px solid black;
+
+        top: 30vh;
+        left: 32%;
+        z-index: 0;
+    }
+    #confirmBg {
+        position: absolute;
+        width: 69vw;
+        height: 92vh;
+        background: rgba(0, 0, 0, 0.336);
+        top: 0;
+        left: 0;
+    }
+    #confirm > button {
+        width: 25%;
+        height: 30px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    #confirm > h3 {
+        width: 100%;
+        text-align: center;
+    }
+    #confirm > button:nth-of-type(2) {background: red;}
+    .hidden {
+        display: none;
     }
 </style>

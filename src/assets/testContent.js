@@ -18,7 +18,7 @@ export default [
          {data: "05.03.2021 17.28", typ: "PPB", wpis: "Przekazano plac budowy - Tomasz Freza"}
         ],
        plan: [
-          {data: "", kto: "", zadanie: ""}
+          {data: "09.04.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
        ],
        notatki: []
     },
@@ -37,6 +37,9 @@ export default [
        faktura: { needed: true, set: true },
        extra: "",
        dziennik: [{data: "01.01.2021 12.38", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
+       plan: [
+         {data: "09.04.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
+      ],
        notatki: []
     },
     {
@@ -54,6 +57,11 @@ export default [
         faktura: { needed: true, set: "" },
         extra: "",
         dziennik: [{data: "01.01.2021 12.38", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
+        plan: [
+         {data: "09.04.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
+         {data: "08.04.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
+         {data: "07.04.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
+      ],
         notatki: []
      },
      {
@@ -71,6 +79,11 @@ export default [
         faktura: { needed: true, set: "" },
         extra: "",
         dziennik: [{data: "01.01.2021 12.38", typ: "Zlecenie", wpis: "Dodano zlecenie."}],
+        plan: [
+         {data: "09.05.2021", kto: "Stanisław Grala", opis: "Budowa złącza"},
+         {data: "08.05.2021", kto: "Stanisław Grala", opis: "Przebudowa linii napowietrznej"},
+         {data: "07.05.2021", kto: "Stanisław Grala", opis: "Regulacja zwisow"},
+      ],
         notatki: []
      },
      {

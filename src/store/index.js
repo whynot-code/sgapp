@@ -32,6 +32,8 @@ export default new Vuex.Store({
     employeeDetails: false,
     newEmployee: false,
     eployeeEditor: "",
+    
+    newPlan: false,
   },
   getters: {
     getCurrOrders: state => state.currOrders,
@@ -57,6 +59,8 @@ export default new Vuex.Store({
     employeeDetails: state => state.employeeDetails,
     newEmployee: state => state.newEmployee,
     eployeeEditor: state => state.eployeeEditor,
+    
+    newPlan: state => state.newPlan
 
   },
   mutations: {
@@ -126,7 +130,16 @@ export default new Vuex.Store({
       }
     })
 },
-  
+  deletePlan: (state, deletedValue) => {
+    state.currOrders.forEach((el => {
+      if(el.name == deletedValue[0]){
+          el.plan.forEach(data => {
+              data == deletedValue[1] ? el.plan.splice(el.plan.indexOf(data), 1) : null
+          })
+      }
+  }))
+  },
+  newPlanActive: (state, newValue) => {state.newPlan = newValue}
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -155,6 +168,8 @@ export default new Vuex.Store({
     updateCurrEmployee({ commit }, newValue) { commit('updateCurrEmployee', newValue)},
     addEmployee({ commit }, newValue) { commit('addEmployee', newValue)},
     
+    deletePlan({ commit }, value) {commit('deletePlan', value)},
+    newPlanActive({ commit }, value) {commit('newPlanActive', value)},
   },
   modules: {
   }
