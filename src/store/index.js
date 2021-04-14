@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import testContent from '@/assets/testContent.js'
 import TestContacts from "@/assets/testContacts.js"
 import TestEmployees from '@/assets/testEmployees.js'
+import TestTodo from '@/assets/testTodo.js'
 
 Vue.use(Vuex)
 
@@ -33,7 +34,7 @@ export default new Vuex.Store({
     newEmployee: false,
     eployeeEditor: "",
     
-    newPlan: false,
+    allTodos: TestTodo,
   },
   getters: {
     getCurrOrders: state => state.currOrders,
@@ -60,8 +61,7 @@ export default new Vuex.Store({
     newEmployee: state => state.newEmployee,
     eployeeEditor: state => state.eployeeEditor,
     
-    newPlan: state => state.newPlan
-
+    allTodos: state => state.allTodos
   },
   mutations: {
     setCurrOrders: (state, newValue) => {state.currOrders.unshift(newValue)},
@@ -129,17 +129,19 @@ export default new Vuex.Store({
         }
       }
     })
-},
-  deletePlan: (state, deletedValue) => {
-    state.currOrders.forEach((el => {
-      if(el.name == deletedValue[0]){
-          el.plan.forEach(data => {
-              data == deletedValue[1] ? el.plan.splice(el.plan.indexOf(data), 1) : null
-          })
-      }
-  }))
   },
-  newPlanActive: (state, newValue) => {state.newPlan = newValue}
+  
+  deleteTodo: (state, el) => {
+    const idx = state.allTodos.indexOf(el)
+    state.allTodos.splice(idx, 1)
+  },
+  doneTodo: (state, el) => {
+    const idx = state.allTodos.indexOf(el)
+    state.allTodos[idx].status = "done"
+  },
+  addTodo: (state, newValue) => {
+    state.allTodos.unshift(newValue)
+  }
   },
   actions: {
     mutateCurrOrders({ commit }, newValue) { commit('setCurrOrders', newValue) },
@@ -168,8 +170,10 @@ export default new Vuex.Store({
     updateCurrEmployee({ commit }, newValue) { commit('updateCurrEmployee', newValue)},
     addEmployee({ commit }, newValue) { commit('addEmployee', newValue)},
     
-    deletePlan({ commit }, value) {commit('deletePlan', value)},
-    newPlanActive({ commit }, value) {commit('newPlanActive', value)},
+    deleteTodo({ commit }, el) { commit("deleteTodo", el)},
+    doneTodo({commit}, el) { commit("doneTodo", el)},
+    addTodo({commit}, newValue) { commit("addTodo", newValue)},
+    
   },
   modules: {
   }

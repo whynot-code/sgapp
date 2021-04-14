@@ -7,7 +7,7 @@
               <router-link to="/Kontakty"><li>Kontakty</li></router-link>
               <li>Mapa</li>
               <router-link to="/Pracownicy"><li>Pracownicy</li></router-link>
-              <li>Notatki</li>
+              <router-link to="/Todo"><li>To Do</li></router-link>
               <li>Ustawienia</li>
           </ul>
       </nav>

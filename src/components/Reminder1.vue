@@ -29,14 +29,14 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    name: "Reminder",
+    name: "Reminder1",
     data(){
         return{
             termsArray: []
         }
     },
     computed: {
-        ...mapGetters(["currTime", "getCurrOrders"]),
+        ...mapGetters(["currTime", "allTodos"]),
         termsToDisplay() {
             let arr = new Array;
             if(this.termsArray){
@@ -44,28 +44,29 @@ export default {
                 arr
             }
             return arr
+        },
+        status() {
+            const arr = [];
+            this.allTodos.forEach(el => arr.push(el.status))
+            return arr
         }
     },
     methods: {
-        ...mapActions(["mutateCurrDetails", "setOpenDetails"]),
-        openCloseDetails(order){
-            this.mutateCurrDetails(order)
-            this.setOpenDetails(true)
-        },
+        ...mapActions([]),
         async checkTerm(){
             setTimeout(() => {
             let fix;  //If term day == 1, program crashed. Don't know why.
             
             this.termsArray = [];
 
-            this.getCurrOrders.forEach((order) => {
+            this.allTodos.forEach((todo) => {
                let count = 0;
 
                 let {month, monthDay, daysInMonth, year} = this.currTime;
                 
                 month = month+1
                 
-                const termin = order.termin.split('.').map(el => Number(el))
+                const termin = todo.termin.split('.').map(el => Number(el))
                 let day = monthDay
 
                 if((termin[2] < year) || (termin[2] <= year && termin[1] < month) || (termin[2] <= year && termin[1] <= month && termin[0] < day)){
@@ -105,22 +106,25 @@ export default {
 
                 fix ? count-- : null //fix Function
                 
-                this.termsArray.push([order.name, order.termin, count, order.id])
+                todo.status == "open" ? this.termsArray.push([todo.task, todo.termin, count]) : null
            
                 this.termsArray.sort((a, b) => {
                     return Number(a[2]) - Number(b[2])
-                }) 
+                })
             })
             }, 1000)
-        }
+        },
     },
     mounted(){
         this.checkTerm();
     },
     watch: {
-        getCurrOrders: function(){
+        allTodos: function(){
             this.checkTerm();
-        }      
+        },  
+        status: function(){
+            this.checkTerm();
+        },  
     }
 }
 </script>
@@ -132,7 +136,6 @@ export default {
         background: white;
         overflow: hidden;
         position: relative;
-        margin-bottom: 12vh;
     }
     table {
         width: 100%;

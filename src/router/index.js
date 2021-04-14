@@ -6,6 +6,7 @@ import Projekty from "@/views/Projekty.vue"
 import Planowanie from "@/views/Planowanie.vue"
 import Kontakty from "@/views/Kontakty.vue"
 import Pracownicy from "@/views/Pracownicy.vue"
+import Todo from "@/views/Todo.vue"
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: '/Pracownicy',
     component: Pracownicy,
     name: "Pracownicy",
+  },
+  {
+    path: '/Todo',
+    component: Todo,
+    name: "Todo",
   },
 ]
 
