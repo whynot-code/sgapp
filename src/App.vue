@@ -4,6 +4,7 @@
     <Header />
     <Main />
     <RightSection />
+    <Loading />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import Header from "@/components/Header.vue"
 import Nav from "@/components/Nav.vue"
 import Main from "@/components/Main.vue"
 import RightSection from "@/components/RightSection.vue"
+import Loading from "@/components/Loading.vue"
 import { mapActions } from 'vuex'
 
 export default {
@@ -21,6 +23,7 @@ export default {
     Nav,
     Main,
     RightSection,
+    Loading
   },
   methods: {
     ...mapActions(["mutateCurrClick"])
@@ -49,6 +52,7 @@ body {
 }
 #app {
   width: 100vw;
+  position: relative;
 }
 .invalid {
     border: 2px solid red;

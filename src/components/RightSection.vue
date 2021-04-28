@@ -2,6 +2,7 @@
   <section class="rightSection">
       <h2>Terminy</h2>
      <Reminder />
+     <h2>Zadania</h2>
      <Reminder1 />
   </section>
 </template>
@@ -31,6 +32,7 @@ export default {
         position: relative;
     }
     h2{
+        font-size: 15px;
         margin-top: 8px;
         padding: 0px 1vw;
         width: 100%;

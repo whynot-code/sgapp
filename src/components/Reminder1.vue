@@ -132,7 +132,7 @@ export default {
 <style scoped>
     #reminder {
         width: 90%;
-        height: 300px;
+        height: 39.5vh;
         background: white;
         overflow: hidden;
         position: relative;
