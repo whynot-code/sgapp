@@ -17,9 +17,9 @@
                 <td>Opis</td>
             </tr>
 
-            <p v-if="typeof currOrders === 'string'"> {{ currOrders }}</p>
+            <p v-if="typeof searchedData === 'string'"> {{ searchedData }}</p>
 
-            <tr class='contact' v-for="con in contacts" :key="contacts.indexOf(con)">
+            <tr v-else class='contact' v-for="con in contacts" :key="contacts.indexOf(con)">
                 <td>{{ contacts.indexOf(con)+1 }}.</td>
                 <td @dblclick="openCloseDetails(con.id)">{{ con.name }}</td>
                 <td>{{ con.company}}  </td>
@@ -45,12 +45,9 @@ export default {
         ContactDetails
     },
     computed: {
-        ...mapGetters(['getCurrOrders', 'searchedData','currContacts']),
+        ...mapGetters(['searchedData', 'currContacts']),
         contacts() {
-            return this.currContacts ? this.currContacts : null
-        },
-         currOrders() {
-            return this.searchedData.length > 0 ? this.searchedData : this.getCurrOrders
+            return this.searchedData.length > 0 ? this.searchedData : this.currContacts
         },
     },
     methods: {

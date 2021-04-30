@@ -12,39 +12,50 @@ export default {
 
 <style scoped>
     #loading {
-        width: 100px;
-        height: 100px;
-        background: whitesmoke;
-        border: 1px solid black;
+    width: 150px;
+    height: 150px;
+
+    background: linen;
+    border: 1px solid black;
+
+    position: absolute;
+    left: 42vw;
+    top: 42vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    }
+
+    #loading > div{
+    width: 100px;
+    height: 100px;
+
+    background: linear-gradient(90deg, rgb(154, 255, 255) 0%, rgba(0, 255, 234, 0.486) 50%, rgba(5, 5, 253, 0.829) 100%);
+    border-radius: 50%;
+    
+    position: relative;
+    overflow: hidden;
+
+    animation: animate 1.5s infinite linear;
+    }
+
+    #loading > div::after {
         position: absolute;
+        content: "";
 
-        top: 0;
-        left: 0;
-        z-index: 2;
+        width: inherit;
+        height: inherit;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    div {
-        width: 50px;
-        height:50px;
-        border: 5px solid rgba(0, 0, 0, 0.753);
-        border-radius: 100px;
-        animation: loading 2s ease-in-out;
-        animation-iteration-count: infinite;
-    }
-    @keyframes loading {
-        0% {
-            opacity: 0;
-            transform: scale(0);
-        }
-        50% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-            transform: scale(1) rotateY(180deg);
-        }
+        border-radius: 50%;
+        background: ivory;
+
+        transform: scale(0.8);
+    } 
+
+    @keyframes animate {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
     }
 </style>

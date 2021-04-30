@@ -139,7 +139,7 @@ export default {
     }
     table {
         width: 100%;
-        height: 300px;
+        height: 39.5vh;
         font-size: 12px;
         border-spacing: 0;
         display: flex;

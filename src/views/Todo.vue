@@ -15,7 +15,9 @@
                <th>Akcja</th>
            </tr>
 
-           <tr :class="{ done: todo.status == 'done'}" v-for="todo in todos" :key="todos.indexOf(todo)">
+            <p v-if="typeof searchedData === 'string'"> {{ searchedData }}</p>
+
+           <tr v-else :class="{ done: todo.status == 'done'}" v-for="todo in todos" :key="todos.indexOf(todo)">
                <td>{{ todo.task }}</td>
                <td>{{ todo.termin }}</td>
                <td>{{ todo.status == "open" ? "Otwarte" : "Zakończono"}}</td>
@@ -42,9 +44,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["allTodos"]),
+        ...mapGetters(["allTodos", "searchedData"]),
         todos(){
-            return this.allTodos ? this.allTodos : null
+            return this.searchedData.length > 0 ? this.searchedData : this.allTodos
         }
     },
     methods: {
@@ -161,4 +163,12 @@ export default {
     }
     span:first-of-type{ bottom:15px; left:8vw;}
     span:last-of-type{ bottom:15px ; left:44vw;}
+
+    p {
+        font-size: 30px;
+        position: absolute;
+        left: 38%;
+        text-align: center;
+        padding: 50px 0;
+    }
 </style>

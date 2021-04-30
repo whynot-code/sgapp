@@ -14,7 +14,7 @@
  
             </tr>
 
-            <p v-if="typeof currOrders === 'string'"> {{ currOrders }}</p>
+            <p v-if="typeof employees === 'string'"> {{ employees }}</p>
 
             <tr class='employees' v-for="emp in employees" :key="employees.indexOf(emp)">
                 <td>{{ employees.indexOf(emp)+1 }}.</td>
@@ -41,9 +41,6 @@ export default {
     computed: {
         ...mapGetters(['searchedData', 'currEmployees']),
         employees() {
-            return this.currEmployees ? this.currEmployees : null
-        },
-         currOrders() {
             return this.searchedData.length > 0 ? this.searchedData : this.currEmployees
         },
     },

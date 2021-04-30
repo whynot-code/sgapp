@@ -27,22 +27,57 @@ export default {
       }
     },
   computed: {
-    ...mapGetters(["getCurrOrders", "calendar"]),
+    ...mapGetters(["getCurrOrders", "calendar","currContacts", "currEmployees", "allTodos"]),
+    currRoute(){
+      return this.$route.name
+    }
   },
   methods: {
     ...mapActions(["setSearchedData", "openCalendar"]),
     searchIt(){
       this.result = []
-      if(this.givenValue){
-      this.getCurrOrders.forEach(order => {
-        order.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(order) : null
-      })
+
+      if(this.$route.name === "Kontakty") {
+        if(this.givenValue){
+        this.currContacts.forEach(value => {
+         value.name.toUpperCase().includes(this.givenValue.toUpperCase()) || value.description.toUpperCase().includes(this.givenValue.toUpperCase()) || value.company.toUpperCase().includes(this.givenValue.toUpperCase()) || value.location.toUpperCase().includes(this.givenValue.toUpperCase()) || value.position.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null
+          })
+        } 
+      }
+      if(this.$route.name === "Projekty"){
+        if(this.givenValue){
+          this.getCurrOrders.forEach(order => {
+            order.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(order) : null
+          })
+        }
+      }
+         if(this.$route.name === "Pracownicy") {
+        if(this.givenValue){
+        this.currEmployees.forEach(value => {
+         value.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null
+          })
+        } 
+      }
+       if(this.$route.name === "Todo") {
+        if(this.givenValue){
+        this.allTodos.forEach(value => {
+         value.task.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null
+          })
+        } 
       }
       this.givenValue && this.result.length === 0 ? this.result = "Brak pasujących wyników!" : null
       this.setSearchedData(this.result)
     }
+  },
+  watch: {
+    currRoute: function(){
+      this.result = [];
+      this.givenValue = "";
+     this.setSearchedData(this.result)
+    },
+
+    }
   }
-}
 </script>
 
 <style scoped>
