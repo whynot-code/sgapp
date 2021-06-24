@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div>
-      <input v-model="givenValue" @keyup="searchIt" type="search" name="search" id="search">
+      <input v-model="givenValue" placeholder="Szukaj.." @keyup="searchIt" type="search" name="search" id="search">
     </div>
     <button @click="openCalendar(!calendar)">
       <img src="../assets/icons/calendar.svg" alt="Calendar-button">
@@ -54,7 +54,7 @@ export default {
          if(this.$route.name === "Pracownicy") {
         if(this.givenValue){
         this.currEmployees.forEach(value => {
-         value.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null
+         value.name.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null || value.email.toUpperCase().includes(this.givenValue.toUpperCase()) ? this.result.push(value) : null
           })
         } 
       }
@@ -67,6 +67,8 @@ export default {
       }
       this.givenValue && this.result.length === 0 ? this.result = "Brak pasujących wyników!" : null
       this.setSearchedData(this.result)
+      console.log(this.setSearchedData(this.result))
+      
     }
   },
   watch: {
@@ -93,10 +95,18 @@ export default {
 
     justify-content: space-around;
     padding: 0;
+    border: none;
   }
   input {
     height: 30px;
     width: 100%;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+    padding: 2px 10px;
+  }
+  input:focus {
+    background: rgb(221, 221, 221);
   }
   tr {
     position: absolute;
@@ -117,9 +127,17 @@ export default {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform 0.1s ease-in-out;
   }
   button:hover {
     background: rgb(105, 105, 105);
+    transform: scale(1.05);
+  }
+  button img {
+    transition: transform 0.1s ease-in-out;
+  }
+  button:hover img {
+    transform: translateY(-1px);
   }
   button:focus {outline:none;}
   button:active {background: rgb(73, 73, 73);;}

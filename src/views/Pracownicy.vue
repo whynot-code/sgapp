@@ -14,9 +14,9 @@
  
             </tr>
 
-            <p v-if="typeof employees === 'string'"> {{ employees }}</p>
+            <p v-if="typeof searchedData === 'string'"> {{ searchedData }}</p>
 
-            <tr class='employees' v-for="emp in employees" :key="employees.indexOf(emp)">
+            <tr v-else class='employees' v-for="emp in employees" :key="employees.indexOf(emp)">
                 <td>{{ employees.indexOf(emp)+1 }}.</td>
                 <td @dblclick="openCloseDetails(emp.id)">{{ emp.name }}</td>
                 <td>{{ emp.email }}</td>

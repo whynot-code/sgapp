@@ -12,27 +12,30 @@ export default {
 
 <style scoped>
     #loading {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 
     background: linen;
     border: 1px solid black;
 
     position: absolute;
-    left: 42vw;
-    top: 42vh;
+    left: 45vw;
+    top: 45vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 100;
+    border-radius: 25px;
+
+    display: none;
     }
 
     #loading > div{
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 
-    background: linear-gradient(90deg, rgb(154, 255, 255) 0%, rgba(0, 255, 234, 0.486) 50%, rgba(5, 5, 253, 0.829) 100%);
+    background: linear-gradient(90deg, rgba(255, 158, 30, 0.226) 0%, rgba(255, 136, 0, 0.5) 50%, rgba(255, 102, 0, 0.829) 100%);
     border-radius: 50%;
     
     position: relative;
