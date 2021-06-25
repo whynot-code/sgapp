@@ -27,7 +27,6 @@ export default {
     .main {
         width: 70vw;
         height: 92vh;
-        border: 1px solid black;
         float: left;
         position: relative;
     }

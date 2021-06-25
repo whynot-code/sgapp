@@ -36,18 +36,47 @@
             <ul id="info">
                 <DetailsEditor />
 
-                <li>Termin: {{ order.termin }}<img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Projekt: {{ setStatus(order.projekt) }} <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>PPB: {{ setStatus(order.ppb) }}<img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Numeracja: {{ setStatus(order.numeracja) }}<img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Dziennik Budowy: {{ setStatus(order.dz) }}<img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Wypis/Wyrys: {{ setStatus(order.wypis) }}<img class="edit" @click="openParamEditor('Wypis', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Zajecie: {{ setStatus(order.zajecie) }}<img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Etapówka: {{ setStatus(order.etapowka) }}<img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Dokumentacja Powykonawcza: {{ setStatus(order.powyk) }}<img class="edit" @click="openParamEditor('Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>Faktura: {{ setStatus(order.faktura) }}<img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/></li>
-                <li>
-                    Dodatkowe Informacje:
+                <li>Termin: 
+                    <img class="edit" @click="openParamEditor('Termin', order.termin)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ order.termin }}</div>
+                </li>
+                <li>Projekt: 
+                     <img class="edit" @click="openParamEditor('Projekt', order.projekt)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                     <div>{{ setStatus(order.projekt) }}</div>
+                     </li>
+                <li>PPB: 
+                    <img class="edit" @click="openParamEditor('PPB', order.ppb)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.ppb) }}</div>
+                </li>
+                <li>Numeracja: 
+                    <img class="edit" @click="openParamEditor('Numeracja', order.numeracja)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.numeracja) }}</div>
+                </li>
+                <li>Dziennik Budowy: 
+                    <img class="edit" @click="openParamEditor('Dziennik', order.dz)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.dz) }}</div>
+                </li>
+                <li>Wypis/Wyrys: 
+                    <img class="edit" @click="openParamEditor('Wypis', order.wypis)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.wypis) }}</div>
+                </li>
+                <li>Zajecie:
+                    <img class="edit" @click="openParamEditor('Zajęcie pasa', order.zajecie)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div> {{ setStatus(order.zajecie) }}</div>
+                </li>
+                <li>Etapówka: 
+                    <img class="edit" @click="openParamEditor('Etapówka', order.etapowka)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.etapowka) }}</div>
+                </li>
+                <li>Dokumentacja Powykonawcza: 
+                    <img class="edit" @click="openParamEditor('Powykonawcza', order.powyk)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.powyk) }}</div>
+                </li>
+                <li>Faktura: 
+                    <img class="edit" @click="openParamEditor('Faktura', order.faktura)" src="@/assets/icons/edit.svg" alt="Edit-Icon"/>
+                    <div>{{ setStatus(order.faktura) }}</div>
+                </li>
+                <li> Dodatkowe Informacje:
                     <img class="accept" v-if="extra" @click="editExtra('Extra', order.extra)" src="@/assets/icons/checked.svg" alt="Accept-Icon"/>
                     <p>
                         <textarea @keyup="extra = true" v-model="order.extra"></textarea>
@@ -56,11 +85,6 @@
             </ul>
            
         </article>
-        <footer>
-       
-            <h3>Notatki <img class="edit" src="@/assets/icons/plus.svg" alt="Edit-Icon"/></h3>
-            <div id="note"></div>
-        </footer>
     </div>
 </template>
 
@@ -166,6 +190,7 @@ export default {
         flex-wrap: wrap;
         padding: 25px;
         z-index: 2;
+        overflow: scroll;
     }
     .closeModal {
         padding: 3px 7px;
@@ -221,20 +246,29 @@ export default {
     }
     ul {
         list-style-type: none;
-        font-size: 20.5px;
         background: white;
-        padding: 10px 20px;
+        padding: 5px 20px;
         position: relative;
+        font-size: 20px;
     }
     li {
         padding: 8px;
         width: 100%;
         position: relative;
         word-wrap: break-word;
+        padding: 20px;
+    }
+    li:hover{
+        background: rgba(128, 128, 128, 0.411);
     }
     li:last-of-type{
         text-align: center;
         margin-top: 15px;
+    }
+    li > div {
+        position: relative;
+        padding: 10px 40px 10px 10px;
+        font-size: 15px;
     }
     .edit, .accept, .decline {
         width: 25px;
@@ -242,6 +276,9 @@ export default {
         position: absolute;
         right: 0;
         cursor: pointer;
+    }
+    .edit{
+    right: 0;
     }
     .accept { 
         right: 5%; 
@@ -252,7 +289,7 @@ export default {
         width: 100%;
         height: 120px;
         margin-top: 10px;
-        font-size: 15px;
+        font-size: 10px;
         position: relative;
         padding: 8px;
         text-align: left;
@@ -290,7 +327,6 @@ export default {
         width: 30px;
         height: 30px;
     }
-  
 
     form {
         position: relative;

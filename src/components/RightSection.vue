@@ -23,7 +23,6 @@ export default {
     .rightSection {
         width: 18vw;
         height: 92vh;
-        border: 1px solid black;
         float: left;
 
         display: flex;

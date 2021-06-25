@@ -55,8 +55,9 @@ export default {
 <style scoped>
     #updatePanel {
         width: 200px;
-        height: 110px;
-        background: rgb(129, 134, 51);
+        height: 150px;
+        max-height: 200px;
+        background: rgb(156, 156, 156);
         position: absolute;
         bottom: -115px;
         left: -102px;
@@ -64,24 +65,18 @@ export default {
         font-size: 13px;
         box-shadow: 0px 1px 3px 0px;
     }
-    #updatePanel::after {
-        position: absolute;
-        content: "";
-        background: rgb(129, 134, 51);
-        z-index: -1;
-        width: 20px;
-        height: 20px;
-        right: 15px;
-        top: -8px;
-        box-shadow: 0px 0px 1px 0px;
-        border-radius: 3px;
-        transform: rotate(45deg);
-    }
     button {
         width: 50%;
     }
     button, h3, textarea {
         margin-top: 7px;
+    }
+    textarea{
+        max-width: 190px;
+        min-width: 190px;
+        min-height: 80px;
+        padding: 10px;
+        font-size: 10px;
     }
 
 </style>

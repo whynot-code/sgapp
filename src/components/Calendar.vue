@@ -8,7 +8,6 @@
         <button @click="changeMonth('next')">➡</button>
       </nav>
     </header>
-    {{ monthCells }}
     <table>
       <tr>
         <th v-for="day in currTime.days" :key="currTime.days.indexOf(day)">

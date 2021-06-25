@@ -61,14 +61,19 @@ export default {
         position: relative;
         z-index: 1;
     }
-    button {
-        width: 200px;
-        background: green;
-        border-radius: 50px;
+       button {
+        background: rgba(0, 15, 218, 0.363);
+        border-radius: 2px;
         border: none;
         font-size: 20px;
         text-align: center;
-        padding: 5px 15px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, background 0.2s ease-in-out;
+    }
+    button:hover {
+        background: rgba(0, 15, 218, 0.486);
+        transform: translateY(-2px);
     }
     header {
         padding: 8px;

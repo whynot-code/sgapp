@@ -47,7 +47,7 @@ export default {
   box-sizing: border-box;
 }
 body {
-  background: grey;
+  background: rgba(180, 180, 180, 0.562);
   overflow: hidden;
 }
 #app {

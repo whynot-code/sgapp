@@ -1,7 +1,7 @@
 <template>
     <section id="todo">
         <div class="form">
-            <input v-model="newTask.task" type="text">
+            <input v-model="newTask.task" placeholder="Nowe zadanie" type="text">
             <span>Nazwa musi zawierać przynajmniej 8 znaków.</span>
             <input v-model="newTask.date" type="date" name="date" id="date">
             <span>Podaj datę.</span>
@@ -93,7 +93,6 @@ export default {
     div {
         position: relative;
         width: 100%;
-        border: 1px solid black;
         padding: 3vh 0;
         height: 7vh;
         display: flex;
@@ -161,8 +160,8 @@ export default {
         font-size: 12px;
         transition: transform 0.2s ease-in-out;
     }
-    span:first-of-type{ bottom:15px; left:8vw;}
-    span:last-of-type{ bottom:15px ; left:44vw;}
+    span:first-of-type{ bottom:18px; left:8vw;}
+    span:last-of-type{ bottom:18px ; left:44vw;}
 
     p {
         font-size: 30px;
@@ -170,5 +169,8 @@ export default {
         left: 38%;
         text-align: center;
         padding: 50px 0;
+    }
+    button{
+        cursor: pointer;
     }
 </style>

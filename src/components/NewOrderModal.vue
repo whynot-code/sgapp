@@ -1,6 +1,6 @@
 <template> 
     <div :class="{hidden: !newOrderModalOn}" class="newOrder">
-        <button @click.stop.prevent="closeModal()" class="closeModal">x</button>
+        <button @click.stop.prevent="closeModal()" class="closeModal"></button>
         <h1>Nowe Zlecenie:</h1>
         <form action="" name="orderForm">
             <label for="name">Nazwa zlecenia:</label><br />
@@ -152,13 +152,27 @@ export default {
     }
   
     .closeModal {
-        padding: 3px 7px;
-        border: 1px solid black;
+        width: 35px;
+        height: 3px;
         border-radius: 5px;
-        background: red;
-        position: relative;
         left: 92%;
-        position: absolute
+        top: 50px;
+        position: absolute;
+        background: black;
+        transform: rotate(45deg);
+        border: none;
+        cursor: pointer;
+    }
+    .closeModal::before {
+        position: absolute;
+        content: "";
+        width: 35px;
+        height: 3px;
+        background: black;
+        transform: rotate(-90deg) translate(2px,-18px);
+    }
+    .closeModal:hover {
+        transform: rotate(45deg) scale(1.1);
     }
     form {
         font-size: 20px;
@@ -195,8 +209,14 @@ export default {
         font-size: 40px;
     }
     .addOrder {
-        font-size: 25px;
+        font-size: 20px;
+        padding: 5px;
         margin: 15px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+    .addOrder:hover {
+        transform: translateY(-2px);
     }
     label {
         padding-left: 30px;
