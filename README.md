@@ -1,4 +1,5 @@
 # sgapp
+> A mini application for company management. Under development.
 
 ## Project setup
 ```
